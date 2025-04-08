@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" class="dark"> 
+<html lang="en" class="dark">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +8,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 </head>
+
 <body class="min-h-screen bg-gray-100 dark:bg-gray-900 font-sans antialiased">
     @include('layouts.navigation')
     <div class="py-12">
@@ -19,4 +21,5 @@
         </div>
     </div>
 </body>
+
 </html>

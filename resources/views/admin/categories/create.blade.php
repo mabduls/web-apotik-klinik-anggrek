@@ -40,15 +40,18 @@
                             {{ __('Icon') }}
                         </label>
                         <input id="icon" type="file" name="icon" required
-                            class="mt-1 block w-full text-gray-700 dark:text-gray-300 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100 dark:file:bg-indigo-900 dark:file:text-indigo-100 dark:hover:file:bg-indigo-800" />
+                            class="mt-5 block w-full text-gray-700 dark:text-gray-300 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100 dark:file:bg-indigo-900 dark:file:text-indigo-100 dark:hover:file:bg-indigo-800" />
                         @error('icon')
                             <p class="mt-2 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
                         @enderror
                     </div>
-                    <div class="flex items-center justify-end mt-6">
+                    <div class="flex items-center justify-end mt-6 flex-column">
                         <button type="submit" class="inline-flex items-center px-4 py-2 bg-indigo-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-indigo-700 focus:bg-indigo-700 active:bg-indigo-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150 dark:bg-indigo-500 dark:hover:bg-indigo-400">
                             {{ __('Add New Category') }}
                         </button>
+                        <a href="{{ route('admin.categories.index') }}" class="ml-5 font-bold py-2 px-6 rounded-full text-white bg-gray-700 hover:bg-gray-600 transition">
+                            Cancel
+                        </a>
                     </div>
                 </form>
             </div>

@@ -33,18 +33,16 @@ class CategoryController extends Controller
         DB::beginTransaction();
 
         try {
-            if($request->hasFile('icon')) {
+            if ($request->hasFile('icon')) {
                 $iconPath = $request->file('icon')->store('category_icons', 'public');
                 $validated['icon'] = $iconPath;
             }
 
             $validated['slug'] = Str::slug($request->name);
-            $newCategory = Category::create($validated);
 
             DB::commit();
 
-            return redirect()->route('admin.categories.index')->with('success', 'Category created successfully');
-
+            return redirect()->route('admin.categories.index')->with('success', 'Category Created Successfully');
         } catch (\Exception $e) {
             DB::rollBack();
             $error = ValidationException::withMessages([
@@ -62,27 +60,53 @@ class CategoryController extends Controller
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Category $category)
-    {
-        //
+    public function edit(Category $category) {
+        return view('admin.categories.edit', [
+            'category' => $category,
+        ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, Category $category)
     {
-        //
+        $validated = $request->validate([
+            'name' => 'sometimes|string|max:255',
+            'icon' => 'sometimes|image|mimes:png,jpg,jpeg,svg',
+        ]);
+
+        DB::beginTransaction();
+
+        try {
+            if ($request->hasFile('icon')) {
+                $iconPath = $request->file('icon')->store('category_icons', 'public');
+                $validated['icon'] = $iconPath;
+            }
+
+            $validated['slug'] = Str::slug($request->name);
+            $category -> update($validated);
+
+            DB::commit();
+
+            return redirect()->route('admin.categories.index')->with('success', 'Category Created Successfully');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            $error = ValidationException::withMessages([
+                'system_error' => ['Something went wrong! Please try again later.' . $e->getMessage()],
+            ]);
+            throw $error;
+        }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(Category $category)
     {
-        //
+        try {
+            $category->delete();
+            return redirect()->route('admin.categories.index')->with('success', 'Category Deleted Successfully');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            $error = ValidationException::withMessages([
+                'system_error' => ['Something went wrong! Please try again later.' . $e->getMessage()],
+            ]);
+            throw $error;
+        }
     }
 }
