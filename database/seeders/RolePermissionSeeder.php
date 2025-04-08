@@ -15,11 +15,11 @@ class RolePermissionSeeder extends Seeder
     public function run(): void
     {
         $OwnerRole = Role::create([
-            'name' => 'Owner',
+            'name' => 'owner',
         ]);
 
         $user = Role::create([
-            'name' => 'Customers',
+            'name' => 'customers',
         ]);
 
         $superAdmin = User::create([

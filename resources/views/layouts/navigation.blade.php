@@ -10,10 +10,24 @@
                     </a>
                 </div>
 
-                <!-- Navigation Links -->
+                <!-- Navigation Dashbaord -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
+                    </x-nav-link>
+                </div>
+
+                <!-- Navigation Manage Products -->
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('admin.products.index')" :active="request()->routeIs('dashboard.products.index')">
+                        {{ __('Manage Products') }}
+                    </x-nav-link>
+                </div>
+
+                <!-- Navigation Manage Categories -->
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('admin.categories.index')" :active="request()->routeIs('dashboard.categories.index')">
+                        {{ __('Manage Categories') }}
                     </x-nav-link>
                 </div>
             </div>
