@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create Category</title>
+    <title>Edit Category</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
@@ -29,7 +29,7 @@
                     @csrf
                     @method('PUT')
                     <div class="mb-4">
-                        <label for="name" class="block font-medium text-sm text-gray-700 dark:text-gray-300">
+                        <label for="name" class="mb-3 block font-medium text-sm text-gray-700 dark:text-gray-300">
                             {{ __('Name') }}
                         </label>
                         <input id="name" type="text" name="name" value="{{ $category->name }}" required autofocus

@@ -26,7 +26,7 @@
                 <form method="POST" action="{{ route('admin.categories.store') }}" enctype="multipart/form-data">
                     @csrf
                     <div class="mb-4">
-                        <label for="name" class="block font-medium text-sm text-gray-700 dark:text-gray-300">
+                        <label for="name" class="mb-3 block font-medium text-sm text-gray-700 dark:text-gray-300">
                             {{ __('Name') }}
                         </label>
                         <input id="name" type="text" name="name" value="{{ old('name') }}" required autofocus

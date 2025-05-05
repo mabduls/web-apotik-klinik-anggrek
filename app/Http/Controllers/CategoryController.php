@@ -15,7 +15,7 @@ class CategoryController extends Controller
         $categories = Category::all();
         return view('admin.categories.index', [
             'categories' => $categories
-        ])->with('success', session('success'));
+        ]);
     }
 
     public function create()
@@ -39,6 +39,8 @@ class CategoryController extends Controller
             }
 
             $validated['slug'] = Str::slug($request->name);
+
+            Category::create($validated);
 
             DB::commit();
 
@@ -86,7 +88,7 @@ class CategoryController extends Controller
 
             DB::commit();
 
-            return redirect()->route('admin.categories.index')->with('success', 'Category Created Successfully');
+            return redirect()->route('admin.categories.index')->with('success', 'Category Update Successfully');
         } catch (\Exception $e) {
             DB::rollBack();
             $error = ValidationException::withMessages([
