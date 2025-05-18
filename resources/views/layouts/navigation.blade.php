@@ -39,6 +39,14 @@
                     </x-nav-link>
                 </div>
                 @endrole
+
+                @role('owner')
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('admin.reservations.index')" :active="request()->routeIs('admin.reservations.index')">
+                        {{ __('Customers Reservation') }}
+                    </x-nav-link>
+                </div>
+                @endrole
             </div>
 
             <!-- Settings Dropdown -->

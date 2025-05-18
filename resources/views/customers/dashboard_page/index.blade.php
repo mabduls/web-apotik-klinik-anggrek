@@ -103,7 +103,7 @@
                 <a href="#" class="text-gray-600 hover:text-blue-500 transition-colors font-medium">Home</a>
                 <a href="#" class="text-gray-600 hover:text-blue-500 transition-colors font-medium">Medicines</a>
                 <a href="#" class="text-gray-600 hover:text-blue-500 transition-colors font-medium">Doctors</a>
-                <a href="#" class="text-gray-600 hover:text-blue-500 transition-colors font-medium">Services</a>
+                <a href="{{ route('customers.reservation.page') }}" class="text-gray-600 hover:text-blue-500 transition-colors font-medium">Reservation</a>
             </div>
 
             <div class="flex items-center gap-3">
