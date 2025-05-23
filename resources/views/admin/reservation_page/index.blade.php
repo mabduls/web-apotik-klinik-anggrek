@@ -20,7 +20,7 @@
             <div class="flex flex-col sm:flex-row gap-3">
                 <!-- Search Bar -->
                 <div class="relative">
-                    <form action="{{ route('admin.reservation_page.index') }}" method="GET">
+                    <form action="{{ route('admin.reservations.index') }}" method="GET">
                         <input type="text" name="search" value="{{ $currentSearch }}" placeholder="Cari reservasi..."
                             class="pl-10 pr-4 py-2 border rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500">
                         <div class="absolute left-3 top-2.5 text-gray-400">
@@ -126,100 +126,94 @@
             </div>
 
             <!-- Pagination -->
-            @if($reservations->hasPages())
-            <div class="px-6 py-4 border-t border-gray-200 dark:border-gray-700 flex items-center justify-between">
-                <div class="flex-1 flex justify-between sm:hidden">
-                    @if($reservations->onFirstPage())
-                    <span class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-gray-200 dark:bg-gray-700 dark:text-gray-300 cursor-not-allowed">
-                        Sebelumnya
-                    </span>
-                    @else
-                    <a href="{{ $reservations->previousPageUrl() }}" class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white dark:bg-gray-800 dark:text-white hover:bg-gray-50 dark:hover:bg-gray-700">
-                        Sebelumnya
-                    </a>
-                    @endif
+            @if($reservations->hasPages() && $reservations->lastPage() > 1)
+            <div class="mt-6 flex justify-center items-center space-x-1">
+                {{-- First Page Link --}}
+                <a href="{{ $reservations->url(1) }}"
+                    class="px-3 py-1 rounded-md bg-blue-500 text-white {{ $reservations->onFirstPage() ? 'opacity-50 cursor-not-allowed' : 'hover:bg-blue-600' }}"
+                    title="First Page"
+                    {{ $reservations->onFirstPage() ? 'disabled' : '' }}>
+                    &laquo;
+                </a>
 
-                    @if($reservations->hasMorePages())
-                    <a href="{{ $reservations->nextPageUrl() }}" class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white dark:bg-gray-800 dark:text-white hover:bg-gray-50 dark:hover:bg-gray-700">
-                        Selanjutnya
-                    </a>
-                    @else
-                    <span class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-gray-200 dark:bg-gray-700 dark:text-gray-300 cursor-not-allowed">
-                        Selanjutnya
-                    </span>
-                    @endif
-                </div>
+                {{-- Previous Page Link --}}
+                <a href="{{ $reservations->previousPageUrl() }}"
+                    class="px-3 py-1 rounded-md bg-blue-500 text-white {{ $reservations->onFirstPage() ? 'opacity-50 cursor-not-allowed' : 'hover:bg-blue-600' }}"
+                    title="Previous"
+                    {{ $reservations->onFirstPage() ? 'disabled' : '' }}>
+                    &lt;
+                </a>
 
-                <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
-                    <div>
-                        <p class="text-sm text-gray-700 dark:text-gray-300">
-                            Menampilkan
-                            <span class="font-medium">{{ $reservations->firstItem() }}</span>
-                            sampai
-                            <span class="font-medium">{{ $reservations->lastItem() }}</span>
-                            dari
-                            <span class="font-medium">{{ $reservations->total() }}</span>
-                            hasil
-                        </p>
-                    </div>
-                    <div>
-                        <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
-                            {{-- Previous Page Link --}}
-                            @if($reservations->onFirstPage())
-                            <span class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-gray-200 text-sm font-medium text-gray-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-400 cursor-not-allowed">
-                                <span class="sr-only">Previous</span>
-                                <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                    <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
-                                </svg>
-                            </span>
-                            @else
-                            <a href="{{ $reservations->previousPageUrl() }}" class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700">
-                                <span class="sr-only">Previous</span>
-                                <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                    <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
-                                </svg>
+                {{-- Pagination Numbers --}}
+                @php
+                $currentPage = $reservations->currentPage();
+                $lastPage = $reservations->lastPage();
+
+                // Always show current page and 2 pages before/after
+                $startPage = max(1, $currentPage - 2);
+                $endPage = min($lastPage, $currentPage + 2);
+
+                // Adjust if near start
+                if ($currentPage <= 3) {
+                    $endPage=min(5, $lastPage);
+                    }
+
+                    // Adjust if near end
+                    if ($currentPage>= $lastPage - 2) {
+                    $startPage = max($lastPage - 4, 1);
+                    }
+
+                    $showStartEllipsis = $startPage > 2;
+                    $showEndEllipsis = $endPage < $lastPage - 1;
+                        @endphp
+
+                        {{-- Always show first page --}}
+                        <a href="{{ $reservations->url(1) }}"
+                        class="px-3 py-1 rounded-md {{ 1 == $currentPage ? 'bg-blue-700 text-white' : 'bg-blue-500 text-white hover:bg-blue-600' }}">
+                        1
+                        </a>
+
+                        @if($showStartEllipsis)
+                        <span class="px-3 py-1 dark:text-gray-300">...</span>
+                        @endif
+
+                        {{-- Middle pages --}}
+                        @for ($i = $startPage; $i <= $endPage; $i++)
+                            @if($i !=1 && $i !=$lastPage) {{-- Skip first/last as we always show them --}}
+                            <a href="{{ $reservations->url($i) }}"
+                            class="px-3 py-1 rounded-md {{ $i == $currentPage ? 'bg-blue-700 text-white' : 'bg-blue-500 text-white hover:bg-blue-600' }}">
+                            {{ $i }}
+                            </a>
+                            @endif
+                            @endfor
+
+                            @if($showEndEllipsis)
+                            <span class="px-3 py-1 dark:text-gray-300">...</span>
+                            @endif
+
+                            {{-- Always show last page if different from first --}}
+                            @if($lastPage != 1)
+                            <a href="{{ $reservations->url($lastPage) }}"
+                                class="px-3 py-1 rounded-md {{ $lastPage == $currentPage ? 'bg-blue-700 text-white' : 'bg-blue-500 text-white hover:bg-blue-600' }}">
+                                {{ $lastPage }}
                             </a>
                             @endif
 
-                            {{-- Pagination Elements --}}
-                            @php
-                            $currentPage = $reservations->currentPage();
-                            $lastPage = $reservations->lastPage();
-                            $startPage = max(1, min($currentPage - 2, $lastPage - 4));
-                            $endPage = min($startPage + 4, $lastPage);
-                            @endphp
+                            {{-- Next Page Link --}}
+                            <a href="{{ $reservations->nextPageUrl() }}"
+                                class="px-3 py-1 rounded-md bg-blue-500 text-white {{ !$reservations->hasMorePages() ? 'opacity-50 cursor-not-allowed' : 'hover:bg-blue-600' }}"
+                                title="Next"
+                                {{ !$reservations->hasMorePages() ? 'disabled' : '' }}>
+                                &gt;
+                            </a>
 
-                            @for ($i = $startPage; $i <= $endPage; $i++)
-                                @if ($i==$currentPage)
-                                <span aria-current="page" class="z-10 bg-blue-50 border-blue-500 text-blue-600 relative inline-flex items-center px-4 py-2 border text-sm font-medium dark:bg-gray-700 dark:border-blue-500 dark:text-blue-300">
-                                {{ $i }}
-                                </span>
-                                @else
-                                <a href="{{ $reservations->url($i) }}" class="bg-white border-gray-300 text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium dark:bg-gray-800 dark:border-gray-600 dark:text-gray-400 dark:hover:bg-gray-700">
-                                    {{ $i }}
-                                </a>
-                                @endif
-                                @endfor
-
-                                {{-- Next Page Link --}}
-                                @if($reservations->hasMorePages())
-                                <a href="{{ $reservations->nextPageUrl() }}" class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700">
-                                    <span class="sr-only">Next</span>
-                                    <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                        <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
-                                    </svg>
-                                </a>
-                                @else
-                                <span class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-gray-200 text-sm font-medium text-gray-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-400 cursor-not-allowed">
-                                    <span class="sr-only">Next</span>
-                                    <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                        <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
-                                    </svg>
-                                </span>
-                                @endif
-                        </nav>
-                    </div>
-                </div>
+                            {{-- Last Page Link --}}
+                            <a href="{{ $reservations->url($lastPage) }}"
+                                class="px-3 py-1 rounded-md bg-blue-500 text-white {{ $reservations->currentPage() == $lastPage ? 'opacity-50 cursor-not-allowed' : 'hover:bg-blue-600' }}"
+                                title="Last Page"
+                                {{ $reservations->currentPage() == $lastPage ? 'disabled' : '' }}>
+                                &raquo;
+                            </a>
             </div>
             @endif
         </div>

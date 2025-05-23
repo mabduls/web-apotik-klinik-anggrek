@@ -107,17 +107,6 @@
                     <form method="POST" action="{{ route('admin.reservations.update', $reservation) }}">
                         @csrf
                         @method('PUT')
-                        <input type="hidden" name="status" value="menunggu">
-                        <button type="submit" class="px-4 py-2 bg-orange-500 text-white rounded-md hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 
-                            {{ $reservation->status === 'menunggu' ? 'opacity-50 cursor-not-allowed' : '' }}"
-                            {{ $reservation->status === 'menunggu' ? 'disabled' : '' }}>
-                            Set Menunggu
-                        </button>
-                    </form>
-
-                    <form method="POST" action="{{ route('admin.reservations.update', $reservation) }}">
-                        @csrf
-                        @method('PUT')
                         <input type="hidden" name="status" value="disetujui">
                         <button type="submit" class="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2">
                             Set Disetujui

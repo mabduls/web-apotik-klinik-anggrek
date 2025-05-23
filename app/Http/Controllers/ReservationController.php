@@ -42,7 +42,7 @@ class ReservationController extends Controller
             });
         }
 
-        $reservations = $query->paginate(10);
+        $reservations = $query->paginate(5);
 
         // Untuk menyimpan filter/sort saat pindah halaman
         if ($request->has('status')) {

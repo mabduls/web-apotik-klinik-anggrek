@@ -32,7 +32,7 @@
                         <span class="text-lg font-medium">Kembali ke Daftar Reservasi</span>
                     </a>
                 </div>
-                <h1 class="text-2xl font-bold text-gray-800">Detail Reservasi</h1>
+                <h1 class="text-2xl font-bold text-gray-600">Detail <span class="text-blue-500">Reservasi Saya</span></h1>
             </div>
         </header>
 

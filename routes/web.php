@@ -36,6 +36,7 @@ Route::middleware('auth')->group(function () {
     Route::prefix('customers')->name('customers.')->middleware('role:customers')->group(function () {
         Route::get('/dashboard', [UserDashboardController::class, 'index'])->name('dashboard.page.index');
         Route::get('/details/{product:slug}', [UserDashboardController::class, 'details'])->name('dashboard.page.details');
+        Route::get('/doctor', [UserDashboardController::class, 'showDoctors'])->name('dashboard.page.doctors');
         Route::get('/transaction', [UserProductTransactionController::class, 'index'])->name('transaction.page');
         Route::get('/transaction/details/{productTransaction}', [UserProductTransactionController::class, 'details'])->name('transaction.details');
         Route::get('/cart', [CartController::class, 'cart'])->name('dashboard.page.cart');

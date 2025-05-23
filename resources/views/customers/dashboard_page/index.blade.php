@@ -100,19 +100,15 @@
 
         <div class="flex items-center gap-6">
             <div class="flex items-center gap-4">
-                <a href="#" class="text-gray-600 hover:text-blue-500 transition-colors font-medium">Home</a>
+                <a href="#" class="text-blue-500 transition-colors font-medium">Home</a>
+                <a href="{{ route('customers.transaction.page') }}" class="text-gray-600 hover:text-blue-500 transition-colors font-medium">Transaction</a>
                 <a href="#" class="text-gray-600 hover:text-blue-500 transition-colors font-medium">Medicines</a>
-                <a href="#" class="text-gray-600 hover:text-blue-500 transition-colors font-medium">Doctors</a>
+                <a href="{{ route('customers.dashboard.page.doctors') }}" class="text-gray-600 hover:text-blue-500 transition-colors font-medium">Doctors</a>
                 <a href="{{ route('customers.reservation.page') }}" class="text-gray-600 hover:text-blue-500 transition-colors font-medium">Reservation</a>
+                <a href="{{ route('customers.dashboard.page.cart') }}" class="text-gray-600 hover:text-blue-500 transition-colors font-medium">Cart</a>
             </div>
 
             <div class="flex items-center gap-3">
-                <button type="button" class="p-2 bg-blue-100 rounded-full hover:bg-blue-200 transition-colors">
-                    <span class="relative">
-                        <img src="{{ asset('assets/svgs/ic-notification.svg') }}" class="size-5 filter-to-primary" alt="">
-                        <span class="block rounded-full size-2 bg-pink-500 absolute top-0 right-0 -translate-x-1/2"></span>
-                    </span>
-                </button>
                 <a href="{{ route('customers.dashboard.page.cart') }}" class="p-2 bg-blue-100 rounded-full hover:bg-blue-200 transition-colors">
                     <img src="{{ asset('assets/svgs/ic-shopping-bag.svg') }}" class="size-5 filter-to-primary" alt="">
                 </a>
@@ -168,9 +164,15 @@
                             </a>
                         </li>
                         <li>
-                            <a href="{{ route('customers.dashboard.page.cart') }}" class="flex items-center gap-3 p-3 rounded-xl hover:bg-blue-50 text-gray-600 font-semibold group">
-                                <img src="{{ asset('assets/svgs/ic-shopping-bag.svg') }}" class="filter-to-grey group-hover:filter-to-primary" alt="">
-                                <span>Cart</span>
+                            <a href="{{ route('customers.dashboard.page.doctors') }}" class="flex items-center gap-3 p-3 rounded-xl hover:bg-blue-50 text-gray-600 font-semibold group">
+                                <img src="{{ asset('assets/svgs/ic-profile.svg') }}" class="filter-to-grey group-hover:filter-to-primary" alt="">
+                                <span>Doctors</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('customers.reservation.page') }}" class="flex items-center gap-3 p-3 rounded-xl hover:bg-blue-50 text-gray-600 font-semibold group">
+                                <img src="{{ asset('assets/svgs/ic-note.svg') }}" class="filter-to-grey group-hover:filter-to-primary" alt="">
+                                <span>Reservation</span>
                             </a>
                         </li>
                         <li>
