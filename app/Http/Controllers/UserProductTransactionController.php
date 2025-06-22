@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 
 class UserProductTransactionController extends Controller
 {
@@ -126,6 +127,8 @@ class UserProductTransactionController extends Controller
                 return back()->with('error', 'Bukti pembayaran tidak valid');
             }
 
+            $trackingNumber = 'LKO-' . now()->format('Ymd') . '-' . strtoupper(Str::random(6));
+
             // Create transaction
             $transaction = ProductTransaction::create([
                 'user_id' => $user->id,
@@ -137,7 +140,8 @@ class UserProductTransactionController extends Controller
                 'proof' => $proofPath,
                 'payment_method' => $validated['payment_method'],
                 'total_amount' => $validated['total_amount'],
-                'is_paid' => false
+                'is_paid' => false,
+                'tracking_number' => $trackingNumber
             ]);
 
             // Create transaction details

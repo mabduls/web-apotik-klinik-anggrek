@@ -144,7 +144,6 @@
 
 <body class="bg-light-bg">
     <!-- Header Navigation -->
-    <!-- Header Navigation -->
     <header class="bg-white header-shadow fixed w-full z-30">
         <nav class="container mx-auto px-6 py-3 flex justify-between items-center">
             <!-- Logo -->
@@ -159,6 +158,8 @@
                     <a href="#beranda" class="px-3 py-2 text-gray-700 hover:text-primary transition">Beranda</a>
                     <a href="#layanan" class="px-3 py-2 text-gray-700 hover:text-primary transition">Layanan</a>
                     <a href="#tentang" class="px-3 py-2 text-gray-700 hover:text-primary transition">Tentang Kami</a>
+                    <a href="#pilih" class="px-3 py-2 text-gray-700 hover:text-primary transition">Pilih Kami</a>
+                    <a href="#contact" class="px-3 py-2 text-gray-700 hover:text-primary transition">Contact</a>
                 </div>
             </div>
 
@@ -232,10 +233,10 @@
                         Apotek & Klinik Anggrek menyediakan layanan kesehatan yang mudah diakses di Cilegon, Banten. Pesan obat online atau reservasi jadwal konsultasi dengan dokter untuk pengalaman berobat yang nyaman.
                     </p>
                     <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
-                        <a href="#" class="btn-primary px-6 py-3 rounded-lg text-center font-medium">
+                        <a href="{{ route('login') }}" class="btn-primary px-6 py-3 rounded-lg text-center font-medium">
                             Pesan Obat Online
                         </a>
-                        <a href="#" class="btn-secondary px-6 py-3 rounded-lg text-center font-medium">
+                        <a href="{{ route('login') }}" class="btn-secondary px-6 py-3 rounded-lg text-center font-medium">
                             Reservasi Dokter
                         </a>
                     </div>
@@ -344,52 +345,54 @@
                 </div>
             </div>
 
-            <div class="mt-24" data-aos="fade-up" data-aos-duration="1000">
-                <h3 class="text-2xl font-bold text-center mb-12">Mengapa Memilih Kami?</h3>
+            <section id="pilih">
+                <div class="mt-24" data-aos="fade-up" data-aos-duration="1000">
+                    <h3 class="text-2xl font-bold text-center mb-12">Mengapa Memilih Kami?</h3>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                    <!-- Feature 1 -->
-                    <div class="text-center">
-                        <div class="bg-primary h-20 w-20 rounded-full flex items-center justify-center mx-auto mb-4">
-                            <i class="fas fa-heartbeat text-white text-3xl"></i>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                        <!-- Feature 1 -->
+                        <div class="text-center">
+                            <div class="bg-primary h-20 w-20 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <i class="fas fa-heartbeat text-white text-3xl"></i>
+                            </div>
+                            <h4 class="text-xl font-semibold mb-2">Pelayanan Terbaik</h4>
+                            <p class="text-gray-600">Kami mengutamakan kenyamanan dan kebutuhan setiap pasien</p>
                         </div>
-                        <h4 class="text-xl font-semibold mb-2">Pelayanan Terbaik</h4>
-                        <p class="text-gray-600">Kami mengutamakan kenyamanan dan kebutuhan setiap pasien</p>
-                    </div>
 
-                    <!-- Feature 2 -->
-                    <div class="text-center">
-                        <div class="bg-secondary h-20 w-20 rounded-full flex items-center justify-center mx-auto mb-4">
-                            <i class="fas fa-shipping-fast text-white text-3xl"></i>
+                        <!-- Feature 2 -->
+                        <div class="text-center">
+                            <div class="bg-secondary h-20 w-20 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <i class="fas fa-shipping-fast text-white text-3xl"></i>
+                            </div>
+                            <h4 class="text-xl font-semibold mb-2">Pengiriman Cepat</h4>
+                            <p class="text-gray-600">Obat diantar ke lokasi Anda dengan cepat dan aman</p>
                         </div>
-                        <h4 class="text-xl font-semibold mb-2">Pengiriman Cepat</h4>
-                        <p class="text-gray-600">Obat diantar ke lokasi Anda dengan cepat dan aman</p>
-                    </div>
 
-                    <!-- Feature 3 -->
-                    <div class="text-center">
-                        <div class="bg-primary h-20 w-20 rounded-full flex items-center justify-center mx-auto mb-4">
-                            <i class="fas fa-calendar-alt text-white text-3xl"></i>
+                        <!-- Feature 3 -->
+                        <div class="text-center">
+                            <div class="bg-primary h-20 w-20 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <i class="fas fa-calendar-alt text-white text-3xl"></i>
+                            </div>
+                            <h4 class="text-xl font-semibold mb-2">Reservasi Mudah</h4>
+                            <p class="text-gray-600">Sistem reservasi online yang praktis dan efisien</p>
                         </div>
-                        <h4 class="text-xl font-semibold mb-2">Reservasi Mudah</h4>
-                        <p class="text-gray-600">Sistem reservasi online yang praktis dan efisien</p>
-                    </div>
 
-                    <!-- Feature 4 -->
-                    <div class="text-center">
-                        <div class="bg-secondary h-20 w-20 rounded-full flex items-center justify-center mx-auto mb-4">
-                            <i class="fas fa-lock text-white text-3xl"></i>
+                        <!-- Feature 4 -->
+                        <div class="text-center">
+                            <div class="bg-secondary h-20 w-20 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <i class="fas fa-lock text-white text-3xl"></i>
+                            </div>
+                            <h4 class="text-xl font-semibold mb-2">Privasi Terjamin</h4>
+                            <p class="text-gray-600">Data kesehatan Anda selalu kami jaga kerahasiaannya</p>
                         </div>
-                        <h4 class="text-xl font-semibold mb-2">Privasi Terjamin</h4>
-                        <p class="text-gray-600">Data kesehatan Anda selalu kami jaga kerahasiaannya</p>
                     </div>
                 </div>
-            </div>
+            </section>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer class="bg-primary text-white py-12">
+    <footer id="contact" class="bg-primary text-white py-12">
         <div class="container mx-auto px-6">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
                 <!-- Contact Info -->
@@ -441,13 +444,13 @@
                         </li>
                     </ul>
                     <div class="mt-4 flex space-x-3">
-                        <a href="#" class="text-white hover:text-gray-200 transition">
+                        <a href="https://www.facebook.com/?locale=id_ID" target="_blank" class="text-white hover:text-gray-200 transition">
                             <i class="fab fa-facebook-f text-xl"></i>
                         </a>
-                        <a href="#" class="text-white hover:text-gray-200 transition">
+                        <a href="https://www.instagram.com/" target="_blank" class="text-white hover:text-gray-200 transition">
                             <i class="fab fa-instagram text-xl"></i>
                         </a>
-                        <a href="#" class="text-white hover:text-gray-200 transition">
+                        <a href="https://web.whatsapp.com/" target="_blank" class="text-white hover:text-gray-200 transition">
                             <i class="fab fa-whatsapp text-xl"></i>
                         </a>
                     </div>

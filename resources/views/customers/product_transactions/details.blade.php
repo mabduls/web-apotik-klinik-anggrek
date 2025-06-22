@@ -82,6 +82,10 @@
                         @endif
                     </div>
                     <div>
+                        <p class="text-gray-600 mb-1">Nomor Resi</p>
+                        <p class="font-semibold text-gray-800">{{ $productTransaction->tracking_number ?? '-' }}</p>
+                    </div>
+                    <div>
                         <p class="text-gray-600 mb-1">Order Date</p>
                         <p class="font-semibold text-gray-800">{{ $productTransaction->created_at->format('d M Y, H:i') }}</p>
                     </div>

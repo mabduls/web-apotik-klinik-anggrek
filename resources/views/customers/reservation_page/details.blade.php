@@ -55,92 +55,167 @@
             </div>
             @endif
 
+            <!-- Main Card -->
             <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
-                <div class="p-6">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                        <!-- Informasi Pasien -->
+                <!-- Card Header -->
+                <div class="px-6 py-4 border-b border-gray-200 bg-blue-50">
+                    <div class="flex flex-col md:flex-row md:items-center md:justify-between">
                         <div>
-                            <h2 class="text-xl font-bold text-gray-800 mb-4 pb-2 border-b border-gray-200">Informasi Pasien</h2>
+                            <h2 class="text-xl font-bold text-gray-800">Detail Reservasi</h2>
+                            <p class="text-sm text-gray-500 mt-1">No. Reservasi: #{{ $reservation->nomor_reservasi }}</p>
+                        </div>
+                        <div class="mt-2 md:mt-0">
+                            @php
+                            $statusClasses = [
+                            'menunggu' => 'bg-yellow-100 text-yellow-800',
+                            'disetujui' => 'bg-green-100 text-green-800'
+                            ];
+                            @endphp
+                            <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-semibold {{ $statusClasses[$reservation->status] }}">
+                                @if($reservation->status === 'disetujui')
+                                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                                @endif
+                                {{ ucfirst($reservation->status) }}
+                                @if($reservation->status === 'menunggu')
+                                <span class="ml-1 text-xs">(Menunggu konfirmasi admin)</span>
+                                @endif
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card Content -->
+                <div class="px-6 py-6">
+                    <!-- Patient and Reservation Info -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <!-- Patient Information -->
+                        <div class="bg-blue-50 p-5 rounded-lg">
+                            <h3 class="text-lg font-bold text-gray-800 mb-4 pb-2 border-b border-gray-200 flex items-center">
+                                <svg class="w-5 h-5 mr-2 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                                </svg>
+                                Informasi Pasien
+                            </h3>
                             <div class="space-y-4">
-                                <div>
-                                    <p class="text-sm text-gray-500">Nama Lengkap:</p>
-                                    <p class="text-gray-800 font-medium">{{ $reservation->nama_pasien }}</p>
+                                <div class="grid grid-cols-3 gap-4">
+                                    <div class="col-span-1">
+                                        <p class="text-sm text-gray-500">Nama Lengkap</p>
+                                    </div>
+                                    <div class="col-span-2">
+                                        <p class="text-gray-800 font-medium">{{ $reservation->nama_pasien }}</p>
+                                    </div>
                                 </div>
-                                <div>
-                                    <p class="text-sm text-gray-500">NIK:</p>
-                                    <p class="text-gray-800 font-medium">{{ $reservation->nik }}</p>
+                                <div class="grid grid-cols-3 gap-4">
+                                    <div class="col-span-1">
+                                        <p class="text-sm text-gray-500">Jenis Kelamin</p>
+                                    </div>
+                                    <div class="col-span-2">
+                                        <p class="text-gray-800 font-medium">{{ $reservation->jenis_kelamin }}</p>
+                                    </div>
                                 </div>
-                                <div>
-                                    <p class="text-sm text-gray-500">Alamat:</p>
-                                    <p class="text-gray-800 font-medium">{{ $reservation->alamat }}</p>
+                                <div class="grid grid-cols-3 gap-4">
+                                    <div class="col-span-1">
+                                        <p class="text-sm text-gray-500">NIK</p>
+                                    </div>
+                                    <div class="col-span-2">
+                                        <p class="text-gray-800 font-medium">{{ $reservation->nik }}</p>
+                                    </div>
                                 </div>
-                                <div>
-                                    <p class="text-sm text-gray-500">Umur:</p>
-                                    <p class="text-gray-800 font-medium">{{ $reservation->umur }} tahun</p>
+                                <div class="grid grid-cols-3 gap-4">
+                                    <div class="col-span-1">
+                                        <p class="text-sm text-gray-500">Alamat</p>
+                                    </div>
+                                    <div class="col-span-2">
+                                        <p class="text-gray-800 font-medium">{{ $reservation->alamat }}</p>
+                                    </div>
                                 </div>
-                                <div>
-                                    <p class="text-sm text-gray-500">No. Telepon:</p>
-                                    <p class="text-gray-800 font-medium">{{ $reservation->no_telepon ?? '-' }}</p>
+                                <div class="grid grid-cols-3 gap-4">
+                                    <div class="col-span-1">
+                                        <p class="text-sm text-gray-500">Umur</p>
+                                    </div>
+                                    <div class="col-span-2">
+                                        <p class="text-gray-800 font-medium">{{ $reservation->umur }} tahun</p>
+                                    </div>
+                                </div>
+                                <div class="grid grid-cols-3 gap-4">
+                                    <div class="col-span-1">
+                                        <p class="text-sm text-gray-500">No. Telepon</p>
+                                    </div>
+                                    <div class="col-span-2">
+                                        <p class="text-gray-800 font-medium">{{ $reservation->no_telepon ?? '-' }}</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Informasi Reservasi -->
-                        <div>
-                            <h2 class="text-xl font-bold text-gray-800 mb-4 pb-2 border-b border-gray-200">Informasi Reservasi</h2>
-                            <div>
-                                <p class="text-sm text-gray-500 mb-1">Status:</p>
-                                <div class="flex items-center mb-3">
-                                    @php
-                                    $statusClasses = [
-                                    'menunggu' => 'bg-yellow-100 text-yellow-800',
-                                    'disetujui' => 'bg-green-100 text-green-800'
-                                    ];
-                                    @endphp
-                                    <span class="px-3 py-1 text-sm font-semibold rounded-full {{ $statusClasses[$reservation->status] }}">
-                                        {{ ucfirst($reservation->status) }}
-                                    </span>
-                                    @if($reservation->status === 'menunggu')
-                                    <span class="ml-2 text-xs text-gray-500">(Menunggu konfirmasi admin)</span>
-                                    @endif
-                                </div>
-                            </div>
+                        <!-- Reservation Information -->
+                        <div class="bg-blue-50 p-5 rounded-lg">
+                            <h3 class="text-lg font-bold text-gray-800 mb-4 pb-2 border-b border-gray-200 flex items-center">
+                                <svg class="w-5 h-5 mr-2 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                                </svg>
+                                Informasi Reservasi
+                            </h3>
                             <div class="space-y-4">
-                                <div>
-                                    <p class="text-sm text-gray-500">Nomor Reservasi:</p>
-                                    <p class="text-gray-800 font-medium">#{{ $reservation->nomor_reservasi }}</p>
+                                <div class="grid grid-cols-3 gap-4">
+                                    <div class="col-span-1">
+                                        <p class="text-sm text-gray-500">Tanggal</p>
+                                    </div>
+                                    <div class="col-span-2">
+                                        <p class="text-gray-800 font-medium">
+                                            {{ \Carbon\Carbon::parse($reservation->tanggal_reservasi)->translatedFormat('l, d F Y') }}
+                                        </p>
+                                    </div>
                                 </div>
-                                <div>
-                                    <p class="text-sm text-gray-500">Tanggal Reservasi:</p>
-                                    <p class="text-gray-800 font-medium">
-                                        {{ \Carbon\Carbon::parse($reservation->tanggal_reservasi)->translatedFormat('l, d F Y') }}
-                                    </p>
-                                </div>
-                                <div>
-                                    <p class="text-sm text-gray-500">Jam Reservasi:</p>
-                                    <p class="text-gray-800 font-medium">{{ $reservation->jam_reservasi }}</p>
+                                <div class="grid grid-cols-3 gap-4">
+                                    <div class="col-span-1">
+                                        <p class="text-sm text-gray-500">Jam</p>
+                                    </div>
+                                    <div class="col-span-2">
+                                        <p class="text-gray-800 font-medium">{{ $reservation->jam_reservasi }}</p>
+                                    </div>
                                 </div>
                             </div>
 
-                            <!-- Informasi Kesehatan -->
-                            <h2 class="text-xl font-bold text-gray-800 mt-6 mb-4 pb-2 border-b border-gray-200">Informasi Kesehatan</h2>
-                            <div class="grid grid-cols-2 gap-4">
-                                <div>
-                                    <p class="text-sm text-gray-500">Tinggi Badan:</p>
-                                    <p class="text-gray-800 font-medium">{{ $reservation->tinggi_badan }} cm</p>
+                            <!-- Health Information -->
+                            <h3 class="text-lg font-bold text-gray-800 mt-6 mb-4 pb-2 border-b border-gray-200 flex items-center">
+                                <svg class="w-5 h-5 mr-2 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path>
+                                </svg>
+                                Informasi Kesehatan
+                            </h3>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div class="grid grid-cols-3 gap-4">
+                                    <div class="col-span-1">
+                                        <p class="text-sm text-gray-500">Tinggi Badan</p>
+                                    </div>
+                                    <div class="col-span-2">
+                                        <p class="text-gray-800 font-medium">{{ $reservation->tinggi_badan }} cm</p>
+                                    </div>
                                 </div>
-                                <div>
-                                    <p class="text-sm text-gray-500">Berat Badan:</p>
-                                    <p class="text-gray-800 font-medium">{{ $reservation->berat_badan }} kg</p>
+                                <div class="grid grid-cols-3 gap-4">
+                                    <div class="col-span-1">
+                                        <p class="text-sm text-gray-500">Berat Badan</p>
+                                    </div>
+                                    <div class="col-span-2">
+                                        <p class="text-gray-800 font-medium">{{ $reservation->berat_badan }} kg</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Keluhan -->
-                    <div class="mt-8">
-                        <h2 class="text-xl font-bold text-gray-800 mb-4 pb-2 border-b border-gray-200">Keluhan:</h2>
-                        <div class="bg-gray-50 rounded-lg p-4">
+                    <!-- Complaint -->
+                    <div class="mt-8 bg-blue-50 p-5 rounded-lg">
+                        <h3 class="text-lg font-bold text-gray-800 mb-4 pb-2 border-b border-gray-200 flex items-center">
+                            <svg class="w-5 h-5 mr-2 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                            </svg>
+                            Keluhan Pasien
+                        </h3>
+                        <div class="bg-white rounded-lg p-4">
                             <p class="text-gray-800">{{ $reservation->keluhan }}</p>
                         </div>
                     </div>

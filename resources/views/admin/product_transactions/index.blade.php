@@ -65,7 +65,15 @@
             <div class="flex flex-col gap-y-5 dark:bg-gray-800 p-10 overflow-hidden shadow-sm sm:rounded-lg">
                 @forelse($product_transactions as $transaction)
                 <div class="item-card grid grid-cols-12 items-center text-white">
-                    <div class="col-span-3">
+                    <div class="col-span-2">
+                        <p class="text-base dark:text-white">
+                            No. Resi
+                        </p>
+                        <h3 class="text-gray-900 dark:text-gray-100 font-bold text-xl">
+                            {{ $transaction->tracking_number ?? '-' }}
+                        </h3>
+                    </div>
+                    <div class="col-span-2">
                         <p class="text-base dark:text-white">
                             Customer
                         </p>
@@ -108,7 +116,7 @@
                         </div>
                         @endif
                     </div>
-                    <div class="col-span-3 flex justify-end">
+                    <div class="col-span-2 flex justify-end">
                         <a href="{{ route('admin.product_transactions.show', $transaction) }}" class="font-bold py-2 px-6 rounded-full text-white bg-gray-700 hover:bg-gray-600 transition">
                             View Detail
                         </a>
@@ -122,11 +130,22 @@
                 </div>
                 @endforelse
             </div>
-            @if($product_transactions->hasPages())
-            <div class="mt-6 flex justify-center items-center space-x-2">
+            <!-- Pagination -->
+            @if($product_transactions->count() > 0 || $product_transactions->hasPages())
+            <div class="mt-6 flex justify-center items-center space-x-1">
+                {{-- First Page Link --}}
+                <a href="{{ $product_transactions->url(1) }}"
+                    class="px-3 py-1 rounded-md bg-blue-500 text-white {{ $product_transactions->onFirstPage() ? 'opacity-50 cursor-not-allowed' : 'hover:bg-blue-600' }}"
+                    title="First Page"
+                    {{ $product_transactions->onFirstPage() ? 'disabled' : '' }}>
+                    &laquo;
+                </a>
+
                 {{-- Previous Page Link --}}
                 <a href="{{ $product_transactions->previousPageUrl() }}"
-                    class="px-3 py-1 rounded-md bg-gray-700 text-white {{ $product_transactions->onFirstPage() ? 'opacity-50 cursor-not-allowed' : 'hover:bg-gray-600' }}">
+                    class="px-3 py-1 rounded-md bg-blue-500 text-white {{ $product_transactions->onFirstPage() ? 'opacity-50 cursor-not-allowed' : 'hover:bg-blue-600' }}"
+                    title="Previous"
+                    {{ $product_transactions->onFirstPage() ? 'disabled' : '' }}>
                     &lt;
                 </a>
 
@@ -134,22 +153,72 @@
                 @php
                 $currentPage = $product_transactions->currentPage();
                 $lastPage = $product_transactions->lastPage();
-                $startPage = max(1, min($currentPage - 2, $lastPage - 4));
-                $endPage = min($startPage + 4, $lastPage);
-                @endphp
 
-                @for ($i = $startPage; $i <= $endPage; $i++)
-                    <a href="{{ $product_transactions->url($i) }}"
-                    class="px-3 py-1 rounded-md {{ $i == $currentPage ? 'bg-primary text-white' : 'bg-gray-700 text-white hover:bg-gray-600' }}">
-                    {{ $i }}
-                    </a>
-                    @endfor
+                // Always show current page and 2 pages before/after
+                $startPage = max(1, $currentPage - 2);
+                $endPage = min($lastPage, $currentPage + 2);
 
-                    {{-- Next Page Link --}}
-                    <a href="{{ $product_transactions->nextPageUrl() }}"
-                        class="px-3 py-1 rounded-md bg-gray-700 text-white {{ !$product_transactions->hasMorePages() ? 'opacity-50 cursor-not-allowed' : 'hover:bg-gray-600' }}">
-                        &gt;
-                    </a>
+                // Adjust if near start
+                if ($currentPage <= 3) {
+                    $endPage=min(5, $lastPage);
+                    }
+
+                    // Adjust if near end
+                    if ($currentPage>= $lastPage - 2) {
+                    $startPage = max($lastPage - 4, 1);
+                    }
+
+                    $showStartEllipsis = $startPage > 2;
+                    $showEndEllipsis = $endPage < $lastPage - 1;
+                        @endphp
+
+                        {{-- Always show first page --}}
+                        <a href="{{ $product_transactions->url(1) }}"
+                        class="px-3 py-1 rounded-md {{ 1 == $currentPage ? 'bg-blue-700 text-white' : 'bg-blue-500 text-white hover:bg-blue-600' }}">
+                        1
+                        </a>
+
+                        @if($showStartEllipsis)
+                        <span class="px-3 py-1 dark:text-gray-300">...</span>
+                        @endif
+
+                        {{-- Middle pages --}}
+                        @for ($i = $startPage; $i <= $endPage; $i++)
+                            @if($i !=1 && $i !=$lastPage) {{-- Skip first/last as we always show them --}}
+                            <a href="{{ $product_transactions->url($i) }}"
+                            class="px-3 py-1 rounded-md {{ $i == $currentPage ? 'bg-blue-700 text-white' : 'bg-blue-500 text-white hover:bg-blue-600' }}">
+                            {{ $i }}
+                            </a>
+                            @endif
+                            @endfor
+
+                            @if($showEndEllipsis)
+                            <span class="px-3 py-1 dark:text-gray-300">...</span>
+                            @endif
+
+                            {{-- Always show last page if different from first --}}
+                            @if($lastPage != 1)
+                            <a href="{{ $product_transactions->url($lastPage) }}"
+                                class="px-3 py-1 rounded-md {{ $lastPage == $currentPage ? 'bg-blue-700 text-white' : 'bg-blue-500 text-white hover:bg-blue-600' }}">
+                                {{ $lastPage }}
+                            </a>
+                            @endif
+
+                            {{-- Next Page Link --}}
+                            <a href="{{ $product_transactions->nextPageUrl() }}"
+                                class="px-3 py-1 rounded-md bg-blue-500 text-white {{ !$product_transactions->hasMorePages() ? 'opacity-50 cursor-not-allowed' : 'hover:bg-blue-600' }}"
+                                title="Next"
+                                {{ !$product_transactions->hasMorePages() ? 'disabled' : '' }}>
+                                &gt;
+                            </a>
+
+                            {{-- Last Page Link --}}
+                            <a href="{{ $product_transactions->url($lastPage) }}"
+                                class="px-3 py-1 rounded-md bg-blue-500 text-white {{ $product_transactions->currentPage() == $lastPage ? 'opacity-50 cursor-not-allowed' : 'hover:bg-blue-600' }}"
+                                title="Last Page"
+                                {{ $product_transactions->currentPage() == $lastPage ? 'disabled' : '' }}>
+                                &raquo;
+                            </a>
             </div>
             @endif
         </div>

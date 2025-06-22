@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Rekap;
 use App\Models\Reservation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -93,6 +94,7 @@ class ReservationController extends Controller
 
         $validator = Validator::make($request->all(), [
             'nama_pasien' => 'required|string|max:255',
+            'jenis_kelamin' => 'required|in:Laki-laki,Perempuan',
             'nik' => [
                 'required',
                 'string',
@@ -189,6 +191,92 @@ class ReservationController extends Controller
         return view('customers.reservation_page.details', compact('reservation'));
     }
 
+    public function showRekap(Request $request)
+    {
+        $query = Rekap::query();
+
+        // Search functionality
+        if ($request->has('search')) {
+            $search = $request->search;
+            $query->where(function ($q) use ($search) {
+                $q->where('nama_pasien', 'like', "%{$search}%")
+                    ->orWhere('nik', 'like', "%{$search}%")
+                    ->orWhere('no_telepon', 'like', "%{$search}%")
+                    ->orWhere('diagnosa_penyakit', 'like', "%{$search}%")
+                    ->orWhereHas('reservation', function ($subQuery) use ($search) {
+                        $subQuery->where('nomor_reservasi', 'like', "%{$search}%");
+                    });
+            });
+        }
+
+        // Sorting
+        if ($request->has('sort')) {
+            if ($request->sort === 'oldest') {
+                $query->oldest();
+            } elseif ($request->sort === 'newest') {
+                $query->latest();
+            }
+        } else {
+            $query->latest();
+        }
+
+        $rekaps = $query->paginate(10);
+
+        // Pass parameters for pagination links
+        if ($request->has('search')) {
+            $rekaps->appends(['search' => $request->search]);
+        }
+        if ($request->has('sort')) {
+            $rekaps->appends(['sort' => $request->sort]);
+        }
+
+        $currentSort = $request->get('sort', 'newest');
+        $currentSearch = $request->get('search', '');
+
+        return view('admin.reservation_page.rekap', compact('rekaps', 'currentSort', 'currentSearch'));
+    }
+
+    public function showRekapDetails(Rekap $rekap)
+    {
+        return view('admin.reservation_page.rekap_details', compact('rekap'));
+    }
+
+    public function updateRekap(Request $request, Rekap $rekap)
+    {
+        $validated = $request->validate([
+            'nama_pasien' => 'required|string|max:255',
+            'nik' => 'required|string|max:20',
+            'alamat' => 'required|string',
+            'umur' => 'required|integer',
+            'jenis_kelamin' => 'required|in:Laki-laki,Perempuan',
+            'tinggi_badan' => 'required|numeric',
+            'berat_badan' => 'required|numeric',
+            'no_telepon' => 'required|string|max:20',
+            'diagnosa_penyakit' => 'required|string',
+            'saran_pengobatan' => 'required|string',
+            'no_bpjs' => 'nullable|string|max:20',
+        ]);
+
+        $rekap->update($validated);
+
+        // Update data reservasi terkait
+        if ($rekap->reservation) {
+            $rekap->reservation->update([
+                'nama_pasien' => $validated['nama_pasien'],
+                'nik' => $validated['nik'],
+                'jenis_kelamin' => $validated['jenis_kelamin'], // Langsung update dengan nilai yang sama
+                'alamat' => $validated['alamat'],
+                'umur' => $validated['umur'],
+                'tinggi_badan' => $validated['tinggi_badan'],
+                'berat_badan' => $validated['berat_badan'],
+                'no_telepon' => $validated['no_telepon'],
+            ]);
+        }
+
+        return redirect()->route('admin.reservations.rekap.details', $rekap)
+            ->with('success', 'Data Pasien Updated Successfully');
+    }
+
     public function edit(Reservation $reservation)
     {
         //
@@ -202,7 +290,25 @@ class ReservationController extends Controller
 
         $reservation->update(['status' => $request->status]);
 
-        return back()->with('success', 'Status reservasi berhasil diperbarui!');
+        if ($request->status === 'disetujui') {
+            Rekap::create([
+                'reservation_id' => $reservation->id,
+                'nama_pasien' => $reservation->nama_pasien,
+                'nik' => $reservation->nik,
+                'jenis_kelamin' => $reservation->jenis_kelamin,
+                'alamat' => $reservation->alamat,
+                'umur' => $reservation->umur,
+                'tinggi_badan' => $reservation->tinggi_badan,
+                'tanggal_reservasi' => $reservation->tanggal_reservasi,
+                'no_telepon' => $reservation->no_telepon ?? '-',
+                'berat_badan' => $reservation->berat_badan,
+                'diagnosa_penyakit' => 'Belum diisi',
+                'saran_pengobatan' => 'Belum diisi',
+                'no_bpjs' => null
+            ]);
+        }
+
+        return back()->with('success', 'Status reservasi berhasil diperbarui dan disimpan!');
     }
 
     /**

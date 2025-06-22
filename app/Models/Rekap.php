@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Reservation extends Model
+class Rekap extends Model
 {
     use HasFactory;
 
@@ -13,13 +13,8 @@ class Reservation extends Model
         'id',
     ];
 
-    public function user()
+    public function reservation()
     {
-        return $this->belongsTo(User::class);
-    }
-
-    public function rekap()
-    {
-        return $this->hasOne(Rekap::class);
+        return $this->belongsTo(Reservation::class);
     }
 }

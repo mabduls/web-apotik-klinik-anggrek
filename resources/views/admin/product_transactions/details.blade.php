@@ -38,11 +38,18 @@
             </div>
             <div class="dark:bg-gray-800 p-6 sm:p-8 overflow-hidden shadow-sm sm:rounded-lg">
                 <!-- Header Transaction Info -->
+                <!-- Header Transaction Info -->
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
                     <div class="bg-gray-700/50 p-4 rounded-lg">
                         <p class="text-sm text-gray-300">Customer</p>
                         <p class="text-white font-bold text-xl">
                             {{ $productTransaction->user->name }}
+                        </p>
+                    </div>
+                    <div class="bg-gray-700/50 p-4 rounded-lg">
+                        <p class="text-sm text-gray-300">No. Resi</p>
+                        <p class="text-white font-bold text-xl">
+                            {{ $productTransaction->tracking_number ?? '-' }}
                         </p>
                     </div>
                     <div class="bg-gray-700/50 p-4 rounded-lg">
@@ -170,7 +177,7 @@
                             @endrole
                             @role('customers')
                             <a href="https://web.whatsapp.com/" target="_blank" class="block w-full text-center py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white rounded transition">
-                                Contact Admin
+                                Contact Pasien
                             </a>
                             @endrole
                         </div>

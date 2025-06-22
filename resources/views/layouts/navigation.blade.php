@@ -47,6 +47,14 @@
                     </x-nav-link>
                 </div>
                 @endrole
+
+                @role('owner')
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('admin.reservations.rekap')" :active="request()->routeIs('admin.reservations.rekap')">
+                        {{ __('Rekap Data Pasien') }}
+                    </x-nav-link>
+                </div>
+                @endrole
             </div>
 
             <!-- Settings Dropdown -->

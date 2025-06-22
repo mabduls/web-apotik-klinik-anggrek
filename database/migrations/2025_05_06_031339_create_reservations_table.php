@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('nomor_reservasi')->unique();
             $table->string('nama_pasien'); 
+            $table->string('jenis_kelamin');
             $table->string('nik', 16);
             $table->text('alamat');
             $table->integer('umur'); 
