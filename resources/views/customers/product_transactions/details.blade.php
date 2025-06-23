@@ -71,6 +71,14 @@
                                 </p>
                             </span>
                         </div>
+                        @elseif($productTransaction->status === 'cancelled')
+                        <div class="inline-flex items-center justify-center">
+                            <span class="font-bold py-1 px-4 rounded-full text-white bg-gradient-to-r from-red-400 to-red-500 flex items-center justify-center h-8 shadow-sm">
+                                <p class="text-white font-bold text-sm leading-none">
+                                    CANCELLED
+                                </p>
+                            </span>
+                        </div>
                         @else
                         <div class="inline-flex items-center justify-center">
                             <span class="font-bold py-1 px-4 rounded-full text-white bg-gradient-to-r from-orange-400 to-orange-500 flex items-center justify-center h-8 shadow-sm">

@@ -19,15 +19,12 @@ class ProductTransactionController extends Controller
         $user = Auth::user();
         $perPage = 5;
 
-        // Base query
         $query = $user->hasRole('customers')
             ? $user->product_transactions()
             : ProductTransaction::query();
 
-        // Eager load user
         $query->with('user');
 
-        // Sorting logic
         $sort = $request->get('sort', 'newest');
         $statusFilter = $request->get('status');
 
@@ -36,20 +33,24 @@ class ProductTransactionController extends Controller
                 $query->orderBy('created_at', 'asc');
                 break;
             case 'success':
-                $query->where('is_paid', true);
+                $query->where('status', 'approved');
                 break;
             case 'pending':
-                $query->where('is_paid', false);
+                $query->where('status', 'pending');
                 break;
-            default: // newest
+            case 'cancelled':
+                $query->where('status', 'cancelled');
+                break;
+            default:
                 $query->orderBy('created_at', 'desc');
         }
 
-        // Additional status filter if provided
         if ($statusFilter === 'success') {
-            $query->where('is_paid', true);
+            $query->where('status', 'approved');
         } elseif ($statusFilter === 'pending') {
-            $query->where('is_paid', false);
+            $query->where('status', 'pending');
+        } elseif ($statusFilter === 'cancelled') {
+            $query->where('status', 'cancelled');
         }
 
         $product_transactions = $query->paginate($perPage);
@@ -168,10 +169,15 @@ class ProductTransactionController extends Controller
 
     public function update(Request $request, ProductTransaction $productTransaction)
     {
-        $productTransaction->update([
-            'is_paid' => true,
+        $validated = $request->validate([
+            'status' => 'required|in:approved,cancelled'
         ]);
-        return redirect()->back()->with('success', 'Product transaction updated successfully');
+
+        $productTransaction->update([
+            'status' => $validated['status']
+        ]);
+
+        return redirect()->back()->with('success', 'Status transaksi berhasil diperbarui');
     }
 
     /**

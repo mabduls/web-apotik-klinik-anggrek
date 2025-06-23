@@ -247,15 +247,6 @@
                                         focus:bg-white focus:border-emerald-300 focus:ring-0 input-glow
                                         placeholder-gray-400 transition-all duration-300"
                                         placeholder="••••••••">
-                                    <button
-                                        type="button"
-                                        onclick="togglePassword('password')"
-                                        class="absolute inset-y-0 right-0 flex items-center pr-3 text-slate-400 hover:text-slate-600 transition-colors duration-200">
-                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" id="eye-password">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
-                                        </svg>
-                                    </button>
                                 </div>
 
                                 <!-- Password Strength Indicator -->
@@ -294,16 +285,6 @@
                                         focus:bg-white focus:border-emerald-300 focus:ring-0 input-glow
                                         placeholder-gray-400 transition-all duration-300"
                                         placeholder="••••••••">
-                                    <button
-                                        type="button"
-                                        onclick="togglePassword('password_confirmation')"
-                                        class="absolute inset-y-0 right-0 flex items-center pr-3 text-slate-400 hover:text-slate-600 transition-colors duration-200">
-                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" id="eye-password_confirmation">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
-                                        </svg>
-                                    </button>
-
                                     <!-- Match Indicator -->
                                     <div class="absolute inset-y-0 right-10 flex items-center pr-2">
                                         <div class="w-2 h-2 rounded-full opacity-0 transition-all duration-300" id="match-indicator"></div>
@@ -436,25 +417,6 @@
                 `;
                 submitBtn.disabled = true;
             });
-
-            // Toggle password visibility
-            function togglePassword(inputId) {
-                const input = document.getElementById(inputId);
-                const eyeIcon = document.getElementById('eye-' + inputId);
-
-                if (input.type === 'password') {
-                    input.type = 'text';
-                    eyeIcon.innerHTML = `
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.878 9.878L3 3m6.878 6.878L12 12m0 0l3.121-3.121M12 12v6"></path>
-                    `;
-                } else {
-                    input.type = 'password';
-                    eyeIcon.innerHTML = `
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
-                    `;
-                }
-            }
 
             // Password strength checker
             function checkPasswordStrength(password) {

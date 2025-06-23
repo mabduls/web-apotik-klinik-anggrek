@@ -87,7 +87,7 @@
         <!-- Menu navigasi dipindah ke tengah -->
         <div class="absolute left-1/2 transform -translate-x-1/2">
             <div class="flex items-center gap-4">
-                <a href="#" class="text-gray-600 hover:text-blue-500 transition-colors font-medium">Home</a>
+                <a href="{{ route('customers.dashboard.page.index') }}" class="text-gray-600 hover:text-blue-500 transition-colors font-medium">Home</a>
                 <a href="{{ route('customers.transaction.page') }}" class="text-blue-500 transition-colors font-medium">Transaction</a>
                 <a href="#" class="text-gray-600 hover:text-blue-500 transition-colors font-medium">Medicines</a>
                 <a href="{{ route('customers.dashboard.page.doctors') }}" class="text-gray-600 hover:text-blue-500 transition-colors font-medium">Doctors</a>
@@ -240,6 +240,7 @@
                                         <option value="">Semua Status</option>
                                         <option value="paid" {{ ($currentStatus ?? '') === 'paid' ? 'selected' : '' }}>Berhasil</option>
                                         <option value="pending" {{ ($currentStatus ?? '') === 'pending' ? 'selected' : '' }}>Pending</option>
+                                        <option value="cancelled" {{ ($currentStatus ?? '') === 'cancelled' ? 'selected' : '' }}>Cancelled</option>
                                     </select>
                                     <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-400">
                                         <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
@@ -301,6 +302,10 @@
                                             @if($transaction->is_paid)
                                             <span class="px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">
                                                 Berhasil
+                                            </span>
+                                            @elseif($transaction->status === 'cancelled')
+                                            <span class="px-2 py-1 text-xs font-semibold rounded-full bg-red-100 text-red-800">
+                                                Dibatalkan
                                             </span>
                                             @else
                                             <span class="px-2 py-1 text-xs font-semibold rounded-full bg-yellow-100 text-yellow-800">

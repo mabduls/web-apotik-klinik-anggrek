@@ -86,7 +86,7 @@
         <!-- Menu navigasi dipindah ke tengah -->
         <div class="absolute left-1/2 transform -translate-x-1/2">
             <div class="flex items-center gap-4">
-                <a href="#" class="text-gray-600 hover:text-blue-500 transition-colors font-medium">Home</a>
+                <a href="{{ route('customers.dashboard.page.index') }}" class="text-gray-600 hover:text-blue-500 transition-colors font-medium">Home</a>
                 <a href="{{ route('customers.reservation.page') }}" class="text-gray-600 hover:text-blue-500 transition-colors font-medium">Transaction</a>
                 <a href="#" class="text-gray-600 hover:text-blue-500 transition-colors font-medium">Medicines</a>
                 <a href="{{ route('customers.dashboard.page.doctors') }}" class="text-gray-600 hover:text-blue-500 transition-colors font-medium">Doctors</a>

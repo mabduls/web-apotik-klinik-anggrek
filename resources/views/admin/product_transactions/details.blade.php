@@ -78,6 +78,10 @@
                     <span class="font-bold py-1 px-4 rounded-full text-white bg-green-500 text-sm w-full text-center">
                         SUCCESS
                     </span>
+                    @elseif($productTransaction->status === 'cancelled')
+                    <span class="font-bold py-1 px-4 rounded-full text-white bg-red-500 text-sm w-full text-center">
+                        CANCELLED
+                    </span>
                     @else
                     <span class="font-bold py-1 px-4 rounded-full text-white bg-orange-500 text-sm w-full text-center">
                         PENDING
@@ -161,24 +165,44 @@
                         <!-- Action Buttons -->
                         <div class="mt-6 space-y-3">
                             @role('owner')
-                            @if($productTransaction->is_paid)
+                            @if($productTransaction->status === 'approved')
                             <a href="https://web.whatsapp.com/" target="_blank" class="block w-full text-center py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white rounded transition">
-                                WhatsApp Customer
+                                Contact Customer
                             </a>
-                            @else
-                            <form method="POST" action="{{ route('admin.product_transactions.update', $productTransaction) }}">
-                                @csrf
-                                @method('PUT')
-                                <button type="submit" class="w-full py-2 px-4 bg-green-600 hover:bg-green-700 text-white rounded transition">
-                                    Approve Order
-                                </button>
-                            </form>
+                            @elseif($productTransaction->status === 'pending')
+                            <div class="flex gap-3">
+                                <form method="POST" action="{{ route('admin.product_transactions.update', $productTransaction) }}">
+                                    @csrf
+                                    @method('PUT')
+                                    <input type="hidden" name="status" value="approved">
+                                    <button type="submit" class="w-full py-2 px-4 bg-green-600 hover:bg-green-700 text-white rounded transition">
+                                        Approve Order
+                                    </button>
+                                </form>
+                                <form method="POST" action="{{ route('admin.product_transactions.update', $productTransaction) }}">
+                                    @csrf
+                                    @method('PUT')
+                                    <input type="hidden" name="status" value="cancelled">
+                                    <button type="submit" class="w-full py-2 px-4 bg-red-600 hover:bg-red-700 text-white rounded transition">
+                                        Cancel Order
+                                    </button>
+                                </form>
+                            </div>
+                            @elseif($productTransaction->status === 'cancelled')
+                            <div class="flex gap-3">
+                                <form method="POST" action="{{ route('admin.product_transactions.update', $productTransaction) }}" class="w-full">
+                                    @csrf
+                                    @method('PUT')
+                                    <input type="hidden" name="status" value="approved">
+                                    <button type="submit" class="w-full py-2 px-4 bg-green-600 hover:bg-green-700 text-white rounded transition">
+                                        Re-approve Order
+                                    </button>
+                                </form>
+                            </div>
+                            <a href="https://web.whatsapp.com/" target="_blank" class="block w-full text-center py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white rounded transition">
+                                Contact Customer
+                            </a>
                             @endif
-                            @endrole
-                            @role('customers')
-                            <a href="https://web.whatsapp.com/" target="_blank" class="block w-full text-center py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white rounded transition">
-                                Contact Pasien
-                            </a>
                             @endrole
                         </div>
                     </div>

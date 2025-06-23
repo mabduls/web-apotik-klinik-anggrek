@@ -18,8 +18,9 @@ return new class extends Migration
             $table->string('proof');
             $table->string('phone_number');
             $table->string('city');
-            $table->boolean('is_paid');
+            $table->string('status')->default('pending');
             $table->unsignedBigInteger('total_amount');
+            $table->string('tracking_number')->nullable();
             $table->text('notes')->nullable();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->timestamps();

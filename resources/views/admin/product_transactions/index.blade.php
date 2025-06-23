@@ -48,6 +48,7 @@
                             <option value="">All Statuses</option>
                             <option value="success" {{ $currentStatus === 'success' ? 'selected' : '' }}>Success Only</option>
                             <option value="pending" {{ $currentStatus === 'pending' ? 'selected' : '' }}>Pending Only</option>
+                            <option value="cancelled" {{ $currentStatus === 'cancelled' ? 'selected' : '' }}>Cancelled Only</option>
                         </select>
                         <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-400">
                             <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
@@ -69,7 +70,7 @@
                         <p class="text-base dark:text-white">
                             No. Resi
                         </p>
-                        <h3 class="text-gray-900 dark:text-gray-100 font-bold text-xl">
+                        <h3 class="text-gray-900 dark:text-gray-100 font-bold text-lg">
                             {{ $transaction->tracking_number ?? '-' }}
                         </h3>
                     </div>
@@ -103,6 +104,14 @@
                             <span class="font-bold py-1 px-4 rounded-full text-white bg-green-500 flex items-center justify-center h-8">
                                 <p class="text-white font-bold text-sm leading-none">
                                     SUCCESS
+                                </p>
+                            </span>
+                        </div>
+                        @elseif($transaction->status === 'cancelled')
+                        <div class="inline-flex items-center justify-center">
+                            <span class="font-bold py-1 px-4 rounded-full text-white bg-red-500 flex items-center justify-center h-8">
+                                <p class="text-white font-bold text-sm leading-none">
+                                    CANCELLED
                                 </p>
                             </span>
                         </div>
