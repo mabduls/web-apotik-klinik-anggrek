@@ -89,7 +89,7 @@
             <div class="flex items-center gap-4">
                 <a href="{{ route('customers.dashboard.page.index') }}" class="text-gray-600 hover:text-blue-500 transition-colors font-medium">Home</a>
                 <a href="{{ route('customers.transaction.page') }}" class="text-blue-500 transition-colors font-medium">Transaction</a>
-                <a href="#" class="text-gray-600 hover:text-blue-500 transition-colors font-medium">Medicines</a>
+                <a href="{{ route('customers.dashboard.page.medicines') }}" class="text-gray-600 hover:text-blue-500 transition-colors font-medium">Medicines</a>
                 <a href="{{ route('customers.dashboard.page.doctors') }}" class="text-gray-600 hover:text-blue-500 transition-colors font-medium">Doctors</a>
                 <a href="{{ route('customers.reservation.page') }}" class="text-gray-600 hover:text-blue-500 transition-colors font-medium">Reservation</a>
                 <a href="{{ route('customers.dashboard.page.cart') }}" class="text-gray-600 hover:text-blue-500 transition-colors font-medium">Cart</a>
@@ -148,6 +148,12 @@
                             <a href="{{ route('customers.transaction.page') }}" class="flex items-center gap-3 p-3 rounded-xl bg-blue-50 text-blue-500 font-semibold group">
                                 <img src="{{ asset('assets/svgs/ic-note.svg') }}" class="filter-to-grey group-hover:filter-to-primary" alt="">
                                 <span>Transaction</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('customers.dashboard.page.medicines') }}" class="flex items-center gap-3 p-3 rounded-xl hover:bg-blue-50 text-gray-600 font-semibold group">
+                                <img src="{{ asset('assets/svgs/ic-medicine.svg') }}" class="w-7 h-7 group-hover:filter-to-primary" alt="">
+                                <span>Medicine</span>
                             </a>
                         </li>
                         <li>
@@ -411,22 +417,6 @@
             </div>
         </div>
     </main>
-
-    <!-- Footer -->
-    <footer class="bg-white border-t border-gray-200 py-6">
-        <div class="container mx-auto px-4">
-            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
-                <div>
-                    <p class="font-semibold text-blue-500">© 2025 Klinik Anggrek. All rights reserved.</p>
-                </div>
-                <div class="flex gap-6">
-                    <a href="#" class="text-gray-600 hover:text-blue-500 transition">Terms</a>
-                    <a href="#" class="text-gray-600 hover:text-blue-500 transition">Privacy</a>
-                    <a href="#" class="text-gray-600 hover:text-blue-500 transition">Contact</a>
-                </div>
-            </div>
-        </div>
-    </footer>
 
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <script>

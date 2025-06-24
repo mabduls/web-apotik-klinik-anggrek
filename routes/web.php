@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\DashboardPageController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductTransactionController;
 use App\Http\Controllers\ProfileController;
@@ -22,9 +23,8 @@ Route::middleware('auth')->group(function () {
 
 
     Route::prefix('admin')->name('admin.')->group(function () {
-        Route::get('/dashboard', function () {
-            return view('dashboard');
-        })->middleware(['auth', 'verified', 'role:owner'])->name('dashboard');
+        Route::get('/dashboard', [DashboardPageController::class, 'index'])
+        ->middleware(['auth', 'verified', 'role:owner'])->name('dashboard');
         Route::resource('products', ProductController::class)->middleware('role:owner');
         Route::resource('categories', CategoryController::class)->middleware('role:owner');
         Route::resource('product_transactions', ProductTransactionController::class)->middleware('role:owner');
@@ -43,6 +43,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/dashboard', [UserDashboardController::class, 'index'])->name('dashboard.page.index');
         Route::get('/doctor', [UserDashboardController::class, 'showDoctors'])->name('dashboard.page.doctors');
         Route::get('/cart', [CartController::class, 'cart'])->name('dashboard.page.cart');
+        Route::get('/medicine', [UserDashboardController::class, 'showMedicines'])->name('dashboard.page.medicines');
 
         // Product Details 
         Route::get('/details/{product:slug}', [UserDashboardController::class, 'details'])->name('dashboard.page.details');
@@ -51,11 +52,11 @@ Route::middleware('auth')->group(function () {
         Route::get('/reservation/create', [ReservationController::class, 'create'])->name('reservation.create');
         Route::post('/reservation/store', [ReservationController::class, 'store'])->name('reservation.store');
         Route::get('/reservation/details/{reservation}', [ReservationController::class, 'showDetails'])->name('reservation.details');
-        Route::get('/reservation', [ReservationController::class, 'index'])->name('reservation.page'); // Umum
+        Route::get('/reservation', [ReservationController::class, 'index'])->name('reservation.page'); 
 
         // Transaction 
         Route::get('/transaction/details/{productTransaction}', [UserProductTransactionController::class, 'details'])->name('transaction.details');
-        Route::get('/transaction', [UserProductTransactionController::class, 'index'])->name('transaction.page'); // Umum
+        Route::get('/transaction', [UserProductTransactionController::class, 'index'])->name('transaction.page'); 
         Route::post('/transaction', [UserProductTransactionController::class, 'store'])->name('transaction.store');
 
         // Cart Actions

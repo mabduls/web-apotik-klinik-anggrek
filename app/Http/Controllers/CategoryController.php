@@ -12,7 +12,10 @@ class CategoryController extends Controller
 {
     public function index()
     {
-        $categories = Category::all();
+        $perPage = 5; 
+        $categories = Category::orderBy('id', 'DESC')
+            ->paginate($perPage);
+
         return view('admin.categories.index', [
             'categories' => $categories
         ]);
@@ -62,7 +65,8 @@ class CategoryController extends Controller
         //
     }
 
-    public function edit(Category $category) {
+    public function edit(Category $category)
+    {
         return view('admin.categories.edit', [
             'category' => $category,
         ]);
@@ -84,7 +88,7 @@ class CategoryController extends Controller
             }
 
             $validated['slug'] = Str::slug($request->name);
-            $category -> update($validated);
+            $category->update($validated);
 
             DB::commit();
 

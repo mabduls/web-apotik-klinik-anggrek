@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
@@ -16,7 +17,11 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::with('category')->orderBy('id', 'DESC')->get();
+        $perPage = 5; 
+        $products = Product::with('category')
+            ->orderBy('id', 'DESC')
+            ->paginate($perPage);
+
         return view('admin.products.index', [
             'products' => $products
         ]);
@@ -96,8 +101,11 @@ class ProductController extends Controller
             'name' => 'sometimes|string|max:255',
             'photo' => 'sometimes|image|mimes:png,jpg,jpeg,svg',
             'about' => 'sometimes|string',
-            'price' => 'sometimes|integer|min:0',
+            'price' => 'required|numeric|min:0',
+            'category_id' => 'required|integer|exists:categories,id',
         ]);
+
+        $validated['price'] = (int) str_replace(['.', ','], '', $request->price);
 
         DB::beginTransaction();
 
@@ -106,13 +114,13 @@ class ProductController extends Controller
                 if ($product->photo) {
                     Storage::disk('public')->delete($product->photo);
                 }
-                
+
                 $photoPath = $request->file('photo')->store('product_photos', 'public');
                 $validated['photo'] = $photoPath;
             }
 
             $validated['slug'] = Str::slug($request->name);
-            $product -> update($validated);
+            $product->update($validated);
 
             DB::commit();
 

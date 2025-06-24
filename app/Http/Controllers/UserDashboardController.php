@@ -6,6 +6,7 @@ use App\Models\Category;
 use App\Models\Product;
 use App\Models\Reservation;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 
 class UserDashboardController extends Controller
 {
@@ -67,6 +68,33 @@ class UserDashboardController extends Controller
             'products' => $products,
             'categories' => $categories,
             'reservations' => $reservations,
+        ]);
+    }
+
+    public function showMedicines(Request $request)
+    {
+        $query = Product::with('category');
+
+        // Filter berdasarkan kategori
+        if ($request->has('category') && $request->category != '') {
+            $query->where('category_id', $request->category);
+        }
+
+        // Filter berdasarkan pencarian
+        if ($request->has('search') && $request->search != '') {
+            $searchTerm = $request->search;
+            $query->where(function ($q) use ($searchTerm) {
+                $q->where('name', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('description', 'LIKE', '%' . $searchTerm . '%');
+            });
+        }
+
+        $products = Product::with('category')->orderBy('name', 'asc')->get();
+        $categories = Category::all();
+
+        return view('customers.dashboard_page.medicines', [
+            'products' => $products,
+            'categories' => $categories,
         ]);
     }
 }

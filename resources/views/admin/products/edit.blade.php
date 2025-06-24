@@ -55,12 +55,11 @@
                         <select name="category_id" id="category_id" required
                             class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 dark:bg-gray-700 
                             dark:border-gray-600 dark:text-white dark:focus:ring-indigo-600 py-2 px-3">
-                            <option value="{{ $product->category->id }}">{{ $product->category->name }}</option>
-                            @forelse($categories as $category)
-                                <option value="{{ $category->id }}">{{ $category->name }}</option>
-                            @empty
-                                <option value="" disabled>No categories available</option>
-                            @endforelse
+                            @foreach($categories as $category)
+                            <option value="{{ $category->id }}" {{ $product->category_id == $category->id ? 'selected' : '' }}>
+                                {{ $category->name }}
+                            </option>
+                            @endforeach
                         </select>
                         @error('category_id')
                         <p class="mt-2 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
@@ -71,9 +70,9 @@
                             {{ __('Photo') }}
                         </label>
                         @if($product->photo)
-                            <img src="{{ Storage::url($product->photo) }}" alt="{{ $product->name }}" class="w-12 h-12 rounded-full object-cover">
+                        <img src="{{ Storage::url($product->photo) }}" alt="{{ $product->name }}" class="w-12 h-12 rounded-full object-cover">
                         @else
-                            <div class="w-12 h-12 bg-gray-200 rounded-full"></div>
+                        <div class="w-12 h-12 bg-gray-200 rounded-full"></div>
                         @endif
                         <input id="photo" type="file" name="photo" autocomplete="Photo"
                             class="mt-5 block w-full text-gray-700 dark:text-gray-300 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100 dark:file:bg-indigo-900 dark:file:text-indigo-100 dark:hover:file:bg-indigo-800" />
@@ -85,8 +84,8 @@
                         <label for="about" class="mb-3 block font-medium text-sm text-gray-700 dark:text-gray-300">
                             {{ __('About') }}
                         </label>
-                        <textarea name="about" id="about" rows="5" value="{{ $product->about ?? old('about') }}"
-                            class="border border-gray-300 rounded-xl w-full shadow-sm focus:border-indigo-500 focus:ring-indigo-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-indigo-600 py-2 px-3"></textarea>
+                        <textarea name="about" id="about" rows="5"
+                            class="border border-gray-300 rounded-xl w-full shadow-sm focus:border-indigo-500 focus:ring-indigo-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-indigo-600 py-2 px-3">{{ $product->about ?? old('about') }}</textarea>
                         @error('about')
                         <p class="mt-2 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
                         @enderror

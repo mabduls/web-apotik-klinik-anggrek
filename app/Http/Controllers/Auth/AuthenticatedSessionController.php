@@ -31,7 +31,7 @@ class AuthenticatedSessionController extends Controller
             return redirect()->route('customers.dashboard.page.index');
         }
 
-        return redirect()->intended(route('admin.dashboard', absolute: false));
+        return redirect()->route('admin.dashboard');
     }
 
     /**
@@ -42,8 +42,9 @@ class AuthenticatedSessionController extends Controller
         Auth::guard('web')->logout();
 
         $request->session()->invalidate();
-
         $request->session()->regenerateToken();
+
+        $request->session()->flash('success', 'Anda telah berhasil log out.');
 
         return redirect('/');
     }

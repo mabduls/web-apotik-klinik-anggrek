@@ -92,7 +92,7 @@
             <div class="flex items-center gap-4">
                 <a href="{{ route('customers.dashboard.page.index') }}" class="text-gray-600 hover:text-blue-500 transition-colors font-medium">Home</a>
                 <a href="{{ route('customers.reservation.page') }}" class="text-gray-600 hover:text-blue-500 transition-colors font-medium">Transaction</a>
-                <a href="#" class="text-gray-600 hover:text-blue-500 transition-colors font-medium">Medicines</a>
+                <a href="{{ route('customers.dashboard.page.medicines') }}" class="text-gray-600 hover:text-blue-500 transition-colors font-medium">Medicines</a>
                 <a href="{{ route('customers.dashboard.page.doctors') }}" class="text-blue-500 transition-colors font-medium">Doctors</a>
                 <a href="{{ route('customers.reservation.page') }}" class="text-gray-600 hover:text-blue-500 transition-colors font-medium">Reservation</a>
                 <a href="{{ route('customers.dashboard.page.cart') }}" class="text-gray-600 hover:text-blue-500 transition-colors font-medium">Cart</a>
@@ -154,7 +154,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="#" class="flex items-center gap-3 p-3 rounded-xl hover:bg-blue-50 text-gray-600 font-semibold group">
+                            <a href="{{ route('customers.dashboard.page.medicines') }}" class="flex items-center gap-3 p-3 rounded-xl hover:bg-blue-50 text-gray-600 font-semibold group">
                                 <img src="{{ asset('assets/svgs/ic-medicine.svg') }}" class="w-7 h-7 group-hover:filter-to-primary" alt="">
                                 <span>Medicine</span>
                             </a>
