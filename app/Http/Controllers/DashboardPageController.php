@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 
 class DashboardPageController extends Controller
 {
+    // In DashboardPageController.php
     public function index()
     {
         $today = now()->timezone('Asia/Jakarta')->startOfDay();
@@ -18,7 +19,7 @@ class DashboardPageController extends Controller
         $totalProducts = Product::count();
         $totalCategories = Category::count();
         $pendingReservations = Reservation::where('status', 'menunggu')->count();
-        $totalPatients = Rekap::distinct('nik')->count('nik');
+        $pendingTransactions = ProductTransaction::where('status', 'pending')->count(); 
 
         $todayReservations = Reservation::where('created_at', '>=', $today)->count();
         $todayTransactions = ProductTransaction::where('created_at', '>=', $today)->count();
@@ -43,7 +44,7 @@ class DashboardPageController extends Controller
             'totalProducts',
             'totalCategories',
             'pendingReservations',
-            'totalPatients',
+            'pendingTransactions', 
             'recentReservations',
             'todayReservations',
             'todayTransactions',

@@ -27,13 +27,14 @@ class AuthenticatedSessionController extends Controller
         $request->authenticate();
         $request->session()->regenerate();
 
-        if ($request->user()->hasRole('customers')) {
+        if ($request->user()->hasRole('customers')) { 
             return redirect()->route('customers.dashboard.page.index');
+        } elseif ($request->user()->hasRole('owner')) {
+            return redirect()->route('admin.dashboard');
         }
 
-        return redirect()->route('admin.dashboard');
+        return redirect()->intended(route('welcome'));
     }
-
     /**
      * Destroy an authenticated session.
      */
