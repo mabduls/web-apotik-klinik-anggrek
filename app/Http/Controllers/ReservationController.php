@@ -282,7 +282,7 @@ class ReservationController extends Controller
         //
     }
 
-    public function update(Request $request, Reservation $reservation)
+    public function storeRekap(Request $request, Reservation $reservation)
     {
         $request->validate([
             'status' => 'required|in:menunggu,disetujui'

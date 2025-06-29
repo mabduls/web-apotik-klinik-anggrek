@@ -64,6 +64,16 @@
                         @error('category_id')
                         <p class="mt-2 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
                         @enderror
+                    </div>                   
+                    <div class="mb-4">
+                        <label for="about" class="mb-3 block font-medium text-sm text-gray-700 dark:text-gray-300">
+                            {{ __('About') }}
+                        </label>
+                        <textarea name="about" id="about" rows="5"
+                            class="border border-gray-300 rounded-xl w-full shadow-sm focus:border-indigo-500 focus:ring-indigo-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-indigo-600 py-2 px-3">{{ $product->about ?? old('about') }}</textarea>
+                        @error('about')
+                        <p class="mt-2 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
+                        @enderror
                     </div>
                     <div class="mb-4">
                         <label for="photo" class="mb-3 block font-medium text-sm text-gray-700 dark:text-gray-300">
@@ -77,16 +87,6 @@
                         <input id="photo" type="file" name="photo" autocomplete="Photo"
                             class="mt-5 block w-full text-gray-700 dark:text-gray-300 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100 dark:file:bg-indigo-900 dark:file:text-indigo-100 dark:hover:file:bg-indigo-800" />
                         @error('photo')
-                        <p class="mt-2 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
-                        @enderror
-                    </div>
-                    <div class="mb-4">
-                        <label for="about" class="mb-3 block font-medium text-sm text-gray-700 dark:text-gray-300">
-                            {{ __('About') }}
-                        </label>
-                        <textarea name="about" id="about" rows="5"
-                            class="border border-gray-300 rounded-xl w-full shadow-sm focus:border-indigo-500 focus:ring-indigo-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-indigo-600 py-2 px-3">{{ $product->about ?? old('about') }}</textarea>
-                        @error('about')
                         <p class="mt-2 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
                         @enderror
                     </div>

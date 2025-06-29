@@ -207,7 +207,7 @@
                 <!-- Action Buttons -->
                 <div class="mt-8 flex justify-end space-x-4">
                     @if($reservation->status !== 'disetujui')
-                    <form method="POST" action="{{ route('admin.reservations.update', $reservation) }}">
+                    <form method="POST" action="{{ route('admin.reservations.store', $reservation) }}">
                         @csrf
                         @method('PUT')
                         <input type="hidden" name="status" value="disetujui">

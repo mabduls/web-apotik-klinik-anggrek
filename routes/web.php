@@ -35,7 +35,7 @@ Route::middleware('auth')->group(function () {
 
         Route::get('/reservations', [ReservationController::class, 'index'])->name('reservations.index');
         Route::get('/reservations/{reservation}', [ReservationController::class, 'showDetails'])->name('reservations.show');
-        Route::put('/reservations/{reservation}', [ReservationController::class, 'update'])->name('reservations.update');
+        Route::put('/reservations/{reservation}', [ReservationController::class, 'storeRekap'])->name('reservations.store');
     });
 
     Route::prefix('customers')->name('customers.')->middleware('role:customers')->group(function () {
