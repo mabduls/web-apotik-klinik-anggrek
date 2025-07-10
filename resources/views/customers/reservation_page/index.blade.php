@@ -265,7 +265,7 @@
 
                         @if($reservations->isEmpty())
                         <div class="text-center py-12">
-                            <img src="{{ asset('assets/svgs/empty-reservations.svg') }}" class="w-32 h-32 mx-auto mb-4 filter-to-primary" alt="No Reservations">
+                            <img src="{{ asset('assets/images/empty-img.png') }}" class="w-32 h-32 mx-auto mb-4" alt="No Reservations">
                             <h3 class="mt-6 text-lg font-medium text-gray-900">Belum ada reservasi</h3>
                             <p class="mt-2 text-sm text-gray-500">Anda belum membuat reservasi apapun. Mulai buat reservasi pertama Anda.</p>
                             <div class="mt-6">

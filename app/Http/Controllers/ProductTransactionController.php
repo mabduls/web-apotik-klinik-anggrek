@@ -16,12 +16,9 @@ class ProductTransactionController extends Controller
      */
     public function index(Request $request)
     {
-        $user = Auth::user();
         $perPage = 5;
 
-        $query = $user->hasRole('customers')
-            ? $user->product_transactions()
-            : ProductTransaction::query();
+        $query = ProductTransaction::with('user');
 
         $query->with('user');
 
@@ -82,8 +79,7 @@ class ProductTransactionController extends Controller
             'phone_number' => 'required|string|max:20',
             'notes' => 'nullable|string|max:255',
             'proof' => 'required|file|mimes:jpeg,png,jpg,pdf|max:5120',
-            'payment_method' => 'required|string|in:manual,ewallet',
-            'total_amount' => 'required|numeric'
+            'payment_method' => 'required|string|in:manual,ewallet'
         ]);
 
         DB::beginTransaction();
@@ -104,6 +100,10 @@ class ProductTransactionController extends Controller
                 return back()->with('error', 'Bukti pembayaran tidak valid');
             }
 
+            $totalAmount = $cartItems->sum(function ($item) {
+                return $item->product->price * $item->quantity;
+            });
+
             // Create transaction
             $transaction = ProductTransaction::create([
                 'user_id' => $user->id,
@@ -114,7 +114,7 @@ class ProductTransactionController extends Controller
                 'notes' => $validated['notes'] ?? null,
                 'proof' => $proofPath,
                 'payment_method' => $validated['payment_method'],
-                'total_amount' => $validated['total_amount'],
+                'total_amount' => $totalAmount,
                 'is_paid' => false
             ]);
 

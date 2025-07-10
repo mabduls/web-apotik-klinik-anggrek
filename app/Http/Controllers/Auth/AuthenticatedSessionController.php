@@ -27,13 +27,34 @@ class AuthenticatedSessionController extends Controller
         $request->authenticate();
         $request->session()->regenerate();
 
-        if ($request->user()->hasRole('customers')) { 
+        // Pastikan user memiliki role yang valid
+        if (!$request->user()->roles()->exists()) {
+            Auth::guard('web')->logout();
+            $request->session()->invalidate();
+            $request->session()->regenerateToken();
+
+            throw ValidationException::withMessages([
+                'email' => 'User does not have any assigned role.',
+            ]);
+        }
+
+        // Beri sedikit delay untuk memastikan role sudah terload
+        $request->user()->load('roles');
+
+        if ($request->user()->hasRole('customers')) {
             return redirect()->route('customers.dashboard.page.index');
         } elseif ($request->user()->hasRole('owner')) {
             return redirect()->route('admin.dashboard');
         }
 
-        return redirect()->intended(route('welcome'));
+        // Jika tidak ada role yang cocok, logout dan beri pesan error
+        Auth::guard('web')->logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        throw ValidationException::withMessages([
+            'email' => 'Unauthorized role access.',
+        ]);
     }
     /**
      * Destroy an authenticated session.
@@ -47,6 +68,6 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->flash('success', 'Anda telah berhasil log out.');
 
-        return redirect('/');
+        return redirect('/login');
     }
 }

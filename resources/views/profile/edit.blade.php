@@ -17,6 +17,7 @@
 
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    
     <script>
         tailwind.config = {
             theme: {
@@ -105,7 +106,7 @@
                                     </svg>
                                 </div>
                                 <div>
-                                    <h3 class="text-xl font-bold text-slate-700">Informasi Profil</h3>
+                                    <h3 class="text-xl font-bold text-slate-700">Informasi Identitas</h3>
                                     <p class="text-slate-500">Perbarui informasi akun dan alamat email Anda</p>
                                 </div>
                             </div>

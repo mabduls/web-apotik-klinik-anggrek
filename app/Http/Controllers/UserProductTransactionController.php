@@ -30,9 +30,7 @@ class UserProductTransactionController extends Controller
         $status = $request->query('status');
 
         // Base query
-        $query = $user->hasRole('customers')
-            ? $user->product_transactions()
-            : ProductTransaction::query();
+        $query = $user->product_transactions();
 
         // Apply search filter
         if ($request->has('search') && $request->search != '') {

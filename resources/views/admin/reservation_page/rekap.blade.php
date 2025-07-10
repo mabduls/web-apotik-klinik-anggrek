@@ -214,7 +214,7 @@
                                             <i class="fas fa-search text-gray-400 text-2xl"></i>
                                         </div>
                                         <div class="text-lg font-medium text-gray-900 dark:text-white">
-                                            Tidak ada data rekap pasien
+                                            Tidak Ada Riwayat Rekam Medis Yang Tersedia
                                         </div>
                                         <div class="text-sm text-gray-500 dark:text-gray-400">
                                             Coba ubah filter pencarian atau tambah data baru

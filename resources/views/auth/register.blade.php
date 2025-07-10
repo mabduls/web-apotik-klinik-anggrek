@@ -14,6 +14,66 @@
             font-family: 'Inter', sans-serif;
         }
 
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        .main-container {
+            height: 100vh;
+            height: 100dvh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            box-sizing: border-box;
+        }
+
+        .form-container {
+            width: 100%;
+            max-width: 28rem;
+            margin: 0 auto;
+            max-height: 95vh;
+            overflow-y: auto;
+            scrollbar-width: thin;
+            scrollbar-color: #3B82F6 #F1F5F9;
+        }
+
+        .form-container::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .form-container::-webkit-scrollbar-track {
+            background: #F1F5F9;
+            border-radius: 3px;
+        }
+
+        .form-container::-webkit-scrollbar-thumb {
+            background-color: #3B82F6;
+            border-radius: 3px;
+        }
+
+        @media (min-width: 768px) {
+            .form-container {
+                max-width: 32rem;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .form-container {
+                max-width: 36rem;
+            }
+        }
+
+        @media (min-width: 1536px) {
+            .form-container {
+                max-width: 40rem;
+            }
+        }
+
         .floating-animation {
             animation: floating 3s ease-in-out infinite;
         }
@@ -85,6 +145,7 @@
             border-radius: 50%;
             opacity: 0.6;
             animation: bubble 4s infinite ease-in-out;
+            z-index: -1;
         }
 
         @keyframes bubble {
@@ -99,10 +160,6 @@
                 transform: translateY(-100px) scale(1.1);
                 opacity: 0.8;
             }
-        }
-
-        .form-step {
-            transition: all 0.3s ease;
         }
 
         .progress-bar {
@@ -151,16 +208,15 @@
     </style>
 </head>
 
-<body class="min-h-screen bg-gradient-to-br from-blue-50 via-cyan-50 to-emerald-50 relative overflow-hidden">
+<body class="bg-gradient-to-br from-blue-50 via-cyan-50 to-emerald-50 relative overflow-hidden">
     <!-- Floating Background Elements -->
     <div class="bubble w-24 h-24 top-20 left-16 floating-animation"></div>
     <div class="bubble w-28 h-28 top-10 right-24 floating-delayed"></div>
     <div class="bubble w-20 h-20 bottom-32 left-12 floating-animation" style="animation-delay: 2.5s;"></div>
     <div class="bubble w-32 h-32 bottom-16 right-16 floating-delayed" style="animation-delay: 1s;"></div>
 
-    <div class="relative z-10 min-h-screen flex items-center justify-center p-4 py-8">
-        <!-- Changed max-w-md to max-w-2xl for wider container -->
-        <div class="w-full max-w-2xl slide-in">
+    <div class="relative z-10 main-container">
+        <div class="form-container slide-in">
             <!-- Main Card -->
             <div class="gradient-border">
                 <div class="glass-effect rounded-3xl overflow-hidden">
@@ -182,7 +238,7 @@
                         </div>
                     </div>
 
-                    <!-- Form Section - Adjusted padding for wider layout -->
+                    <!-- Form Section -->
                     <div class="p-6 md:p-8">
                         <form method="POST" action="{{ route('register') }}" class="space-y-4">
                             @csrf

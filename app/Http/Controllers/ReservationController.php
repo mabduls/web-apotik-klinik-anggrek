@@ -14,10 +14,14 @@ class ReservationController extends Controller
     {
         $query = Reservation::query();
 
-        if (auth()->user()->hasRole('owner')) {
+        $user = auth()->user();
+
+        if ($user->hasRole('owner')) {
             $query->latest();
-        } else {
+        } elseif ($user->hasRole('customers')) {
             $query->where('user_id', auth()->id())->latest();
+        } else {
+            abort(403, 'Unauthorized role.');
         }
 
         // Filter berdasarkan status
@@ -60,11 +64,15 @@ class ReservationController extends Controller
         $currentStatus = $request->get('status', '');
         $currentSearch = $request->get('search', '');
 
-        if (auth()->user()->hasRole('owner')) {
+        if ($user->hasRole('owner')) {
             return view('admin.reservation_page.index', compact('reservations', 'currentSort', 'currentStatus', 'currentSearch'));
         }
 
-        return view('customers.reservation_page.index', compact('reservations', 'currentSort', 'currentStatus', 'currentSearch'));
+        if ($user->hasRole('customers')) {
+            return view('customers.reservation_page.index', compact('reservations', 'currentSort', 'currentStatus', 'currentSearch'));
+        }
+
+        abort(403, 'Unauthorized role.');
     }
 
     public function create()
