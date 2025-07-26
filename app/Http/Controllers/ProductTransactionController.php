@@ -68,84 +68,6 @@ class ProductTransactionController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        $validated = $request->validate([
-            'address' => 'required|string|max:255',
-            'city' => 'required|string|max:255',
-            'post_code' => 'required|string|max:255',
-            'phone_number' => 'required|string|max:20',
-            'notes' => 'nullable|string|max:255',
-            'proof' => 'required|file|mimes:jpeg,png,jpg,pdf|max:5120',
-            'payment_method' => 'required|string|in:manual,ewallet'
-        ]);
-
-        DB::beginTransaction();
-
-        try {
-            $user = Auth::user();
-            $cartItems = $user->carts()->with('product')->get();
-
-            // Verifikasi keranjang tidak kosong
-            if ($cartItems->isEmpty()) {
-                return back()->with('error', 'Keranjang Anda kosong');
-            }
-
-            // Handle file upload
-            if ($request->hasFile('proof') && $request->file('proof')->isValid()) {
-                $proofPath = $request->file('proof')->store('payment_proofs', 'public');
-            } else {
-                return back()->with('error', 'Bukti pembayaran tidak valid');
-            }
-
-            $totalAmount = $cartItems->sum(function ($item) {
-                return $item->product->price * $item->quantity;
-            });
-
-            // Create transaction
-            $transaction = ProductTransaction::create([
-                'user_id' => $user->id,
-                'address' => $validated['address'],
-                'city' => $validated['city'],
-                'post_code' => $validated['post_code'],
-                'phone_number' => $validated['phone_number'],
-                'notes' => $validated['notes'] ?? null,
-                'proof' => $proofPath,
-                'payment_method' => $validated['payment_method'],
-                'total_amount' => $totalAmount,
-                'is_paid' => false
-            ]);
-
-            // Create transaction details
-            foreach ($cartItems as $item) {
-                TransactionDetail::create([
-                    'product_transaction_id' => $transaction->id,
-                    'product_id' => $item->product_id,
-                    'quantity' => $item->quantity,
-                    'price' => $item->product->price
-                ]);
-            }
-
-            // Clear cart
-            $user->carts()->delete();
-
-            DB::commit();
-
-            return redirect()->route('product_transactions.index')
-                ->with('success', 'Checkout berhasil!');
-        } catch (\Exception $e) {
-            DB::rollBack();
-
-            // Log error untuk debugging
-            Log::error('Checkout error: ' . $e->getMessage());
-
-            return back()->with('error', 'Checkout gagal: ' . $e->getMessage());
-        }
-    }
-
-    /**
      * Display the specified resource.
      */
     public function show(ProductTransaction $productTransaction)
@@ -177,7 +99,8 @@ class ProductTransactionController extends Controller
             'status' => $validated['status']
         ]);
 
-        return redirect()->back()->with('success', 'Status transaksi berhasil diperbarui');
+        return redirect()->route('admin.product_transactions.show', $productTransaction)
+            ->with('success', 'Status transaksi berhasil diperbarui');
     }
 
     /**

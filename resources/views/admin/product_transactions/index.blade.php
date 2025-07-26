@@ -108,9 +108,9 @@
                                     </div>
                                 </div>
                                 <div class="flex-shrink-0">
-                                    @if($transaction->is_paid)
+                                    @if($transaction->status === 'approved')
                                     <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200">
-                                        <i class="fas fa-check-circle mr-1"></i>SUCCESS
+                                        <i class="fas fa-check-circle mr-1"></i>APPROVED
                                     </span>
                                     @elseif($transaction->status === 'cancelled')
                                     <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200">
@@ -181,9 +181,9 @@
                             </div>
 
                             <div class="col-span-2">
-                                @if($transaction->is_paid)
+                                @if($transaction->status === 'approved')
                                 <span class="inline-flex items-center px-3 py-2 rounded-full text-sm font-semibold bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200">
-                                    <i class="fas fa-check-circle mr-2"></i>SUCCESS
+                                    <i class="fas fa-check-circle mr-2"></i>APPROVED
                                 </span>
                                 @elseif($transaction->status === 'cancelled')
                                 <span class="inline-flex items-center px-3 py-2 rounded-full text-sm font-semibold bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200">

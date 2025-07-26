@@ -74,9 +74,9 @@
 
                 <!-- Payment Status indicator remains as is -->
                 <div class="bg-gray-700/50 p-4 rounded-lg flex items-center mt-4">
-                    @if($productTransaction->is_paid)
+                    @if($productTransaction->status === 'approved')
                     <span class="font-bold py-1 px-4 rounded-full text-white bg-green-500 text-sm w-full text-center">
-                        SUCCESS
+                        APPROVED
                     </span>
                     @elseif($productTransaction->status === 'cancelled')
                     <span class="font-bold py-1 px-4 rounded-full text-white bg-red-500 text-sm w-full text-center">

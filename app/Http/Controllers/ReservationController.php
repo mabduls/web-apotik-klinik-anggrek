@@ -249,6 +249,7 @@ class ReservationController extends Controller
         return view('admin.reservation_page.rekap_details', compact('rekap'));
     }
 
+    //fungsi ini digunakan untuk mengupdate dan memperbarui data riwayat rekam medis milik pasien
     public function updateRekap(Request $request, Rekap $rekap)
     {
         $validated = $request->validate([
@@ -272,7 +273,7 @@ class ReservationController extends Controller
             $rekap->reservation->update([
                 'nama_pasien' => $validated['nama_pasien'],
                 'nik' => $validated['nik'],
-                'jenis_kelamin' => $validated['jenis_kelamin'], // Langsung update dengan nilai yang sama
+                'jenis_kelamin' => $validated['jenis_kelamin'], 
                 'alamat' => $validated['alamat'],
                 'umur' => $validated['umur'],
                 'tinggi_badan' => $validated['tinggi_badan'],
@@ -282,7 +283,7 @@ class ReservationController extends Controller
         }
 
         return redirect()->route('admin.reservations.rekap.details', $rekap)
-            ->with('success', 'Data Pasien Updated Successfully');
+            ->with('success', 'Data Riwayat Rekam Medis Pasien Berhasil diperbarui!');
     }
 
     public function edit(Reservation $reservation)
@@ -290,6 +291,9 @@ class ReservationController extends Controller
         //
     }
 
+    //Seharusnya nama fungsinya updateStatusReservasi karena fungsi ini akan
+    //UPDATE STATUS SETIAP RESERVASI(MENGUBAH STATUS MENJADI DISSETUJUI) 
+    //LALU SETELAH ITU DILAKUKAN PENGECEKAN APAKAH STATUS DISETUJUI, JIKA IYA MAKA DISIMPAN KE TABEL REKAP
     public function storeRekap(Request $request, Reservation $reservation)
     {
         $request->validate([

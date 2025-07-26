@@ -99,8 +99,8 @@ class UserProductTransactionController extends Controller
         $validated = $request->validate([
             'address' => 'required|string|max:255',
             'city' => 'required|string|max:255',
-            'post_code' => 'required|string|max:255',
-            'phone_number' => 'required|string|max:20',
+            'post_code' => 'required|numeric|digits:5',
+            'phone_number' => 'required|numeric|digits_between:10,15',
             'notes' => 'nullable|string|max:255',
             'proof' => 'required|file|mimes:jpeg,png,jpg,pdf|max:5120',
             'payment_method' => 'required|string|in:manual,ewallet',

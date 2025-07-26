@@ -155,6 +155,22 @@
                 opacity: 0.8;
             }
         }
+
+        /* Style untuk toggle password button */
+        .toggle-password {
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .toggle-password:hover {
+            opacity: 0.7;
+        }
+
+        .toggle-password img {
+            width: 20px;
+            height: 20px;
+            object-fit: contain;
+        }
     </style>
 </head>
 
@@ -226,10 +242,17 @@
                                         </svg>
                                     </div>
                                     <input id="password" name="password" type="password" autocomplete="current-password" required
-                                        class="w-full pl-10 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-2xl 
+                                        class="w-full pl-10 pr-12 py-3 bg-gray-50 border border-gray-200 rounded-2xl 
                                         focus:bg-white focus:border-pink-300 focus:ring-0 input-glow
                                         placeholder-gray-400 transition-all duration-300"
                                         placeholder="••••••••">
+
+                                    <!-- Toggle Password Visibility Button -->
+                                    <div class="absolute inset-y-0 right-0 pr-3 flex items-center">
+                                        <button type="button" id="togglePassword" class="toggle-password focus:outline-none">
+                                            <img id="eyeIcon" src="{{ asset('assets/images/ic-eyes-closed.png') }}" alt="Toggle Password" class="w-5 h-5">
+                                        </button>
+                                    </div>
                                 </div>
                                 @error('password')
                                 <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
@@ -292,6 +315,33 @@
             </div>
         </div>
     </div>
+
+    <!-- JavaScript untuk toggle password -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const togglePassword = document.getElementById('togglePassword');
+            const passwordInput = document.getElementById('password');
+            const eyeIcon = document.getElementById('eyeIcon');
+
+            let isPasswordVisible = false;
+
+            togglePassword.addEventListener('click', function() {
+                if (isPasswordVisible) {
+                    // Hide password
+                    passwordInput.type = 'password';
+                    eyeIcon.src = '{{ asset("assets/images/ic-eyes-closed.png") }}';
+                    eyeIcon.alt = 'Show Password';
+                    isPasswordVisible = false;
+                } else {
+                    // Show password
+                    passwordInput.type = 'text';
+                    eyeIcon.src = '{{ asset("assets/images/ic-eyes.png") }}';
+                    eyeIcon.alt = 'Hide Password';
+                    isPasswordVisible = true;
+                }
+            });
+        });
+    </script>
 </body>
 
 </html>

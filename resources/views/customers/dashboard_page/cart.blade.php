@@ -198,11 +198,13 @@
                                     <div>
                                         <label for="post_code" class="block text-sm font-medium text-gray-700 mb-2">Postal Code</label>
                                         <input type="text" id="post_code" name="post_code" class="w-full border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-300 focus:border-blue-300 px-4 py-2 transition" placeholder="Enter postal code" required>
+                                        <!-- Pesan error akan ditambahkan di sini secara otomatis -->
                                     </div>
 
                                     <div>
                                         <label for="phone_number" class="block text-sm font-medium text-gray-700 mb-2">Phone Number</label>
                                         <input type="tel" id="phone_number" name="phone_number" class="w-full border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-300 focus:border-blue-300 px-4 py-2 transition" placeholder="Enter your phone number" required>
+                                        <!-- Pesan error akan ditambahkan di sini secara otomatis -->
                                     </div>
 
                                     <div>
@@ -688,6 +690,87 @@
                 }
                 hideModal();
             });
+
+            // Validasi real-time untuk input nomor telepon dan kode pos
+            document.getElementById('phone_number').addEventListener('input', function(e) {
+                validateNumericInput(this, 'Nomor telepon harus berupa angka');
+            });
+
+            document.getElementById('post_code').addEventListener('input', function(e) {
+                validateNumericInput(this, 'Kode pos harus berupa angka');
+            });
+
+            function validateNumericInput(inputElement, errorMessage) {
+                const value = inputElement.value;
+                const errorElementId = inputElement.id + '_error';
+                let errorElement = document.getElementById(errorElementId);
+
+                // Hanya izinkan input angka
+                inputElement.value = value.replace(/[^0-9]/g, '');
+
+                // Cek apakah ada karakter non-angka yang dihapus
+                if (value !== inputElement.value) {
+                    // Buat atau perbarui elemen error jika belum ada
+                    if (!errorElement) {
+                        errorElement = document.createElement('p');
+                        errorElement.id = errorElementId;
+                        errorElement.className = 'text-red-500 text-sm mt-1';
+                        inputElement.parentNode.appendChild(errorElement);
+                    }
+                    errorElement.textContent = errorMessage;
+                    inputElement.classList.add('border-red-500');
+                } else {
+                    // Hapus pesan error dan styling jika valid
+                    if (errorElement) {
+                        errorElement.remove();
+                    }
+                    inputElement.classList.remove('border-red-500');
+                }
+            }
+
+            // Validasi sebelum submit form
+            document.getElementById('checkout-form').addEventListener('submit', function(e) {
+                const phoneNumber = document.getElementById('phone_number').value;
+                const postCode = document.getElementById('post_code').value;
+                let isValid = true;
+
+                // Validasi nomor telepon
+                if (!/^\d{10,15}$/.test(phoneNumber)) {
+                    showInputError('phone_number', 'Nomor telepon harus 10-15 digit angka');
+                    isValid = false;
+                }
+
+                // Validasi kode pos
+                if (!/^\d{5}$/.test(postCode)) {
+                    showInputError('post_code', 'Kode pos harus 5 digit angka');
+                    isValid = false;
+                }
+
+                if (!isValid) {
+                    e.preventDefault();
+                    // Scroll ke error pertama
+                    document.querySelector('.border-red-500')?.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'center'
+                    });
+                }
+            });
+
+            function showInputError(inputId, message) {
+                const inputElement = document.getElementById(inputId);
+                const errorElementId = inputId + '_error';
+                let errorElement = document.getElementById(errorElementId);
+
+                if (!errorElement) {
+                    errorElement = document.createElement('p');
+                    errorElement.id = errorElementId;
+                    errorElement.className = 'text-red-500 text-sm mt-1';
+                    inputElement.parentNode.appendChild(errorElement);
+                }
+
+                errorElement.textContent = message;
+                inputElement.classList.add('border-red-500');
+            }
 
             // Modal cancel action
             modalCancel.addEventListener('click', hideModal);
