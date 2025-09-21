@@ -29,10 +29,10 @@
                         <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
                             <path fill-rule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd" />
                         </svg>
-                        <span class="text-lg font-medium">Kembali ke Daftar Reservasi</span>
+                        <span class="text-lg font-medium">Back To List Reservation</span>
                     </a>
                 </div>
-                <h1 class="text-2xl font-bold text-gray-800">Buat Reservasi Baru</h1>
+                <h1 class="text-2xl font-bold text-gray-800">Create New Reservation</h1>
                 <div class="w-10"></div> <!-- Spacer untuk balance -->
             </div>
         </header>
@@ -42,7 +42,7 @@
             <div class="max-w-4xl mx-auto">
                 <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
                     <div class="p-8">
-                        <h2 class="text-2xl font-bold text-gray-800 mb-6">Formulir Reservasi</h2>
+                        <h2 class="text-2xl font-bold text-gray-800 mb-6">Reservation Form</h2>
 
                         @if ($errors->any())
                         <div class="bg-red-50 border-l-4 border-red-500 p-4 mb-6 rounded">
@@ -193,7 +193,7 @@
                             <div class="mt-8">
                                 <button type="submit"
                                     class="w-full bg-gradient-to-r from-blue-400 to-purple-400 text-white font-bold py-3 px-6 rounded-lg hover:from-blue-500 hover:to-purple-500 transition shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-                                    Buat Reservasi
+                                    Create Reservation
                                 </button>
                             </div>
                         </form>

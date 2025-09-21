@@ -14,13 +14,13 @@ return new class extends Migration
         Schema::create('product_transactions', function (Blueprint $table) {
             $table->id();
             $table->string('address');
-            $table->string('post_code');
+            $table->string('post_code', 10);
             $table->string('proof');
-            $table->string('phone_number');
-            $table->string('city');
-            $table->string('status')->default('pending');
+            $table->string('phone_number', 15);
+            $table->string('city', 50);
+            $table->string('status', 15)->default('pending');
             $table->unsignedBigInteger('total_amount');
-            $table->string('tracking_number')->nullable();
+            $table->string('tracking_number', 30)->nullable();
             $table->text('notes')->nullable();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->timestamps();

@@ -351,7 +351,7 @@
                         </div>
                         <div class="ml-4">
                             <p class="text-sm text-gray-600 dark:text-gray-400">Total Products</p>
-                            <p class="text-2xl font-bold text-gray-900 dark:text-white">{{ $products->count() }}</p>
+                            <p class="text-2xl font-bold text-gray-900 dark:text-white">{{ $products->total() }}</p>
                         </div>
                     </div>
                 </div>

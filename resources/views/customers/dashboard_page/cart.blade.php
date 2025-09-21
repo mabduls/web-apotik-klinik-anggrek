@@ -335,7 +335,7 @@
                                         Proceed to Checkout
                                     </button>
                                 </form>
-                                <a href="{{ route('customers.dashboard.page.index') }}" class="w-full block text-center mt-4 text-blue-500 font-medium hover:text-blue-600 transition">
+                                <a href="{{ route('customers.dashboard.page.medicines') }}" class="w-full block text-center mt-4 text-blue-500 font-medium hover:text-blue-600 transition">
                                     Continue Shopping
                                 </a>
                             </div>

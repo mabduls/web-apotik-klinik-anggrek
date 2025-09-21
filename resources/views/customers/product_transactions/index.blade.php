@@ -184,7 +184,7 @@
                 <section class="mb-6">
                     <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
                         <h2 class="text-3xl font-extrabold text-gray-600">
-                            Daftar <span class="text-blue-500">Transaksi Saya</span>
+                            List <span class="text-blue-500">My Transaction</span>
                         </h2>
                     </div>
                 </section>

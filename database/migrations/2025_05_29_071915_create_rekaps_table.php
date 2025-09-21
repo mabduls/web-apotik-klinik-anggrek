@@ -14,18 +14,18 @@ return new class extends Migration
         Schema::create('rekaps', function (Blueprint $table) {
             $table->id();
             $table->foreignId('reservation_id')->constrained()->onDelete('cascade');
-            $table->string('nama_pasien');
-            $table->string('nik');
-            $table->string('jenis_kelamin');
+            $table->string('nama_pasien', 50);
+            $table->string('nik', 16);
+            $table->string('jenis_kelamin', 25);
             $table->text('alamat');
-            $table->integer('umur');
+            $table->unsignedTinyInteger('umur');
             $table->decimal('tinggi_badan', 5, 2);
             $table->date('tanggal_reservasi');
-            $table->string('no_telepon');
+            $table->string('no_telepon', 15);
             $table->decimal('berat_badan', 5, 2);
             $table->text('diagnosa_penyakit');
             $table->text('saran_pengobatan');
-            $table->string('no_bpjs')->nullable();
+            $table->string('no_bpjs', 15)->nullable();
             $table->timestamps();
         });
     }

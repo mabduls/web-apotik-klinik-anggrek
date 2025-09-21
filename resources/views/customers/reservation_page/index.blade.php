@@ -183,10 +183,10 @@
                 <section class="mb-6">
                     <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
                         <h2 class="text-3xl font-extrabold text-gray-600">
-                            Daftar <span class="text-blue-500">Reservasi Saya</span>
+                            List <span class="text-blue-500">My Reservation</span>
                         </h2>
                         <a href="{{ route('customers.reservation.create') }}" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-xl transition shadow-md">
-                            Buat Reservasi Baru
+                            Create New Reservation
                         </a>
                     </div>
                 </section>
@@ -232,8 +232,8 @@
                                 <!-- Date Sorting -->
                                 <div class="relative">
                                     <select id="sort-select" class="bg-white border rounded-lg px-3 py-2 pr-8 appearance-none focus:outline-none focus:ring-2 focus:ring-blue-500">
-                                        <option value="newest" {{ $currentSort === 'newest' ? 'selected' : '' }}>Terbaru</option>
-                                        <option value="oldest" {{ $currentSort === 'oldest' ? 'selected' : '' }}>Terlama</option>
+                                        <option value="newest" {{ $currentSort === 'newest' ? 'selected' : '' }}>Latest</option>
+                                        <option value="oldest" {{ $currentSort === 'oldest' ? 'selected' : '' }}>Longest</option>
                                     </select>
                                     <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-400">
                                         <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
@@ -245,7 +245,7 @@
                                 <!-- Status Filter -->
                                 <div class="relative">
                                     <select id="status-filter" class="bg-white border rounded-lg px-3 py-2 pr-8 appearance-none focus:outline-none focus:ring-2 focus:ring-blue-500">
-                                        <option value="">Semua Status</option>
+                                        <option value="">All Status</option>
                                         <option value="disetujui" {{ $currentStatus === 'disetujui' ? 'selected' : '' }}>Disetujui</option>
                                         <option value="menunggu" {{ $currentStatus === 'menunggu' ? 'selected' : '' }}>Menunggu</option>
                                     </select>
@@ -258,7 +258,7 @@
 
                                 <!-- Apply Button -->
                                 <button id="apply-filters" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition">
-                                    Terapkan
+                                    Apply
                                 </button>
                             </div>
                         </div>
