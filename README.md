@@ -184,8 +184,8 @@ Proyek ini memiliki Ciptaan Program Komputer.
 Dikembangkan sebagai bagian dari penelitian skripsi oleh:
 
 **👨‍🎓 Muhammad Abdul Aziz**  
-**👨‍🎓 Dr. Eng. Adi Wibowo, S.Si.,M.Kom.**
-**👨‍🎓 Etna Vianita, S.Mat., M.Mat.**
+**👨‍🎓 Dr. Eng. Adi Wibowo, S.Si.,M.Kom.**  
+**👨‍🎓 Etna Vianita, S.Mat., M.Mat.**  
 Universitas Diponegoro — Departemen Informatika (2025)
 
 ---
