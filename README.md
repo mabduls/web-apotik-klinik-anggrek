@@ -96,15 +96,16 @@ User.php
 
 ### Controller (`app/Http/Controllers`)
 ```
-CategoryController.php
-ProductController.php
 CartController.php
-ReservationController.php
+CategoryController.php
+Controller.php
 DashboardPageController.php
+ProductController.php
 ProductTransactionController.php
 ProfileController.php
+ReservationController.php
 UserDashboardController.php
-Auth/
+UserProductTransactionController.php
 ```
 
 ---
@@ -179,11 +180,12 @@ Hasil pengujian menunjukkan bahwa seluruh fungsionalitas sistem berjalan **sesua
 
 ## 📄 Lisensi
 
-Proyek ini menggunakan lisensi [MIT](https://opensource.org/licenses/MIT).  
+Proyek ini memiliki Ciptaan Program Komputer.  
 Dikembangkan sebagai bagian dari penelitian skripsi oleh:
 
 **👨‍🎓 Muhammad Abdul Aziz**  
-NIM: 24060121140150  
+**👨‍🎓 Dr. Eng. Adi Wibowo, S.Si.,M.Kom.**
+**👨‍🎓 Etna Vianita, S.Mat., M.Mat.**
 Universitas Diponegoro — Departemen Informatika (2025)
 
 ---
