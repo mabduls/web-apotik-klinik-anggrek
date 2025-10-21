@@ -150,6 +150,9 @@ php artisan migrate --seed
 
 # Jalankan server
 php artisan serve
+
+# Jalankan auto reload vite
+npm run dev
 ```
 
 Akses aplikasi melalui [http://localhost:8000](http://localhost:8000)
